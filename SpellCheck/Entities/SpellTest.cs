@@ -9,5 +9,7 @@ namespace SpellCheck.Entities
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public List<Spelling> Spellings { get; set; }
+
+        public List<TestOccurance>  TestOccurances { get; set; }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using SpellCheck.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpellCheck
 {
@@ -13,12 +10,23 @@ namespace SpellCheck
         private readonly SpellCheckContext _context = new SpellCheckContext();
 
 
-        public List<SpellTest> Tests
+
+        public List<SpellTest> GetTests()
         {
-            get
-            {
-                return _context.SpellTest.ToList();
+
+            return _context.SpellTest.ToList();
+
         }
+
+        public List<Spelling> GetSpellings(int testId)
+        {
+
+            var spellTest = _context.SpellTest.Include("Spellings").Where(st => st.Id == testId);
+
+
+            var t = spellTest.FirstOrDefault();
+
+            return spellTest.FirstOrDefault().Spellings;
         }
     }
 }

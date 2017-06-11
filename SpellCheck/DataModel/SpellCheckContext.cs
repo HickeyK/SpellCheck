@@ -7,5 +7,7 @@ namespace SpellCheck
     {
         public DbSet<Spelling> Spelling { get; set; }
         public DbSet<SpellTest> SpellTest { get; set; }
+
+        public DbSet<TestOccurance> Result { get; set; }
     }
 }
