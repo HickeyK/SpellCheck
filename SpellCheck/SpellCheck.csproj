@@ -73,7 +73,12 @@
       <DependentUpon>201706110547188_AddTestOccurance.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\SpellService.cs" />
+    <Compile Include="ViewModel\AnswerDialogViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Page Include="View\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +92,9 @@
     <Compile Include="Entities\SpellTest.cs" />
     <Compile Include="Entities\Spelling.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="View\AnswerDialog.xaml.cs">
+      <DependentUpon>AnswerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

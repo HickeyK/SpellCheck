@@ -1,5 +1,6 @@
 ﻿using SpellCheck.Entities;
 using SpellCheck.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -10,6 +11,7 @@ namespace SpellCheck.ViewModel
 
         private ConnectedRepository _repo;
         private SpellService _service;
+        private Action<SpellTest> ShowAnswerDialog;
 
         public MainWindowViewModel ()
         {
@@ -85,11 +87,8 @@ namespace SpellCheck.ViewModel
 
         private void OnBegin()
         {
-            foreach (var spelling in Spellings)
-            {
-
-
-            }
+            var dialog = new View.AnswerDialog();
+            dialog.ShowDialog();
 
         }
 

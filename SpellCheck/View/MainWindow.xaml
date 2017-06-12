@@ -8,14 +8,32 @@
         mc:Ignorable="d"
         Title="Spelling Test"
         Height="350"
-        Width="550">
+        Width="650">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFF36935" />
+        </Style>
+        <Style x:Key="TextStyle"
+               TargetType="Control">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFF36935" />
+        </Style>
+    </Window.Resources>
+
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="294*" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <DockPanel>
             <Button Command="{Binding BeginCommand}"
@@ -29,17 +47,43 @@
                       SelectedItem="{Binding CurrentTest}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
+                        <DataTemplate.Resources>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource {x:Type TextBlock}}" />
+                        </DataTemplate.Resources>
                         <TextBlock Text="{Binding Description}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
 
-        <ListBox x:Name="Spellings"
+        <DataGrid ItemsSource="{Binding Spellings}"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  Style="{StaticResource TextStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Word"
+                                    Binding="{Binding Word}"
+                                    MinWidth="200" />
+                <DataGridTextColumn Header="Sentence"
+                                    Binding="{Binding ContextSentence}"
+                                    Width="*" />
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <!--<ListBox x:Name="Spellings"
                  ItemsSource="{Binding Spellings}"
                  Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style TargetType="TextBlock"
+                               BasedOn="{StaticResource {x:Type TextBlock}}" />
+                    </DataTemplate.Resources>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Word}" MinWidth="100"/>
                         <TextBlock Margin="10, 0, 10, 0" Text="As in the sentence...." Width="100"/>
@@ -48,7 +92,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
-        </ListBox>
+        </ListBox>-->
 
 
     </Grid>
