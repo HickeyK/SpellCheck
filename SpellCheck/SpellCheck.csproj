@@ -72,7 +72,7 @@
     <Compile Include="Migrations\201706110547188_AddTestOccurance.Designer.cs">
       <DependentUpon>201706110547188_AddTestOccurance.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\SpellService.cs" />
+    <Compile Include="Services\SpellTestService.cs" />
     <Compile Include="ViewModel\AnswerDialogViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Page Include="View\AnswerDialog.xaml">
@@ -92,6 +92,7 @@
     <Compile Include="Entities\SpellTest.cs" />
     <Compile Include="Entities\Spelling.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\SpellingViewModel.cs" />
     <Compile Include="View\AnswerDialog.xaml.cs">
       <DependentUpon>AnswerDialog.xaml</DependentUpon>
     </Compile>

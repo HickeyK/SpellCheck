@@ -1,8 +1,8 @@
 ﻿using SpellCheck.Entities;
-using SpellCheck.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SpellCheck.ViewModel
 {
@@ -10,10 +10,13 @@ namespace SpellCheck.ViewModel
     {
 
         private ConnectedRepository _repo;
-        private SpellService _service;
+        //private SpellTestService _service;
         private Action<SpellTest> ShowAnswerDialog;
 
-        public MainWindowViewModel ()
+        #region Construction
+
+
+        public MainWindowViewModel()
         {
 
             if (DesignerProperties.GetIsInDesignMode(
@@ -22,7 +25,7 @@ namespace SpellCheck.ViewModel
 
             _repo = new ConnectedRepository();
 
-            _service = new SpellService();
+            //_service = new SpellTestService();
 
             // Pass in the repo
             Tests = new ObservableCollection<SpellTest>(_repo.GetTests());
@@ -32,17 +35,21 @@ namespace SpellCheck.ViewModel
 
         }
 
+        #endregion
 
 
+
+
+
+        #region Properties
 
 
         public RelayCommand BeginCommand { get; set; }
-        
+
         public ObservableCollection<SpellTest> Tests { get; set; }
 
 
         private SpellTest _currentTest;
-
         public SpellTest CurrentTest
         {
             get
@@ -55,14 +62,20 @@ namespace SpellCheck.ViewModel
                 if (_currentTest.Id == value.Id) return;
 
                 _currentTest = value;
-                Spellings = new ObservableCollection<Spelling>(
-                    _repo.GetSpellings(_currentTest.Id));
+
+
+                Spellings = new ObservableCollection<SpellingViewModel>(
+
+                    _repo.GetSpellings(_currentTest.Id).Select(
+                        s => new SpellingViewModel(s)
+                      )
+                    );
 
             }
         }
 
-        private ObservableCollection<Spelling> _spellings;
-        public ObservableCollection<Spelling> Spellings
+        private ObservableCollection<SpellingViewModel> _spellings;
+        public ObservableCollection<SpellingViewModel> Spellings
         {
             get
             {
@@ -76,6 +89,11 @@ namespace SpellCheck.ViewModel
         }
 
 
+        #endregion
+
+
+        #region INPC
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -83,12 +101,21 @@ namespace SpellCheck.ViewModel
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate{};
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        #endregion
+
+
+
+        #region EventHandling
+
 
         private void OnBegin()
         {
-            var dialog = new View.AnswerDialog();
+            AnswerDialogViewModel advm = new AnswerDialogViewModel(CurrentTest);
+            var dialog = new View.AnswerDialog(advm);
             dialog.ShowDialog();
+            OnPropertyChanged("Spellings");
 
         }
 
@@ -96,5 +123,9 @@ namespace SpellCheck.ViewModel
         {
             return _currentTest != null;
         }
+
+
+        #endregion
+
     }
 }

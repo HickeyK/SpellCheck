@@ -70,6 +70,12 @@
                 <DataGridTextColumn Header="Sentence"
                                     Binding="{Binding ContextSentence}"
                                     Width="*" />
+                <DataGridTextColumn Header="Correct"
+                                    Binding="{Binding CorrectCount}"
+                                    Width="Auto" />
+                <DataGridTextColumn Header="Wrong"
+                                    Binding="{Binding ErrorCount}"
+                                    Width="Auto" />
 
             </DataGrid.Columns>
 

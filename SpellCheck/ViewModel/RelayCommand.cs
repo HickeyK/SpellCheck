@@ -10,6 +10,7 @@ namespace SpellCheck.ViewModel
         Action _TargetExecuteMethod;
         Func<bool> _TargetCanExecuteMethod;
 
+
         public RelayCommand(Action executeMethod)
         {
             _TargetExecuteMethod = executeMethod;
@@ -21,6 +22,8 @@ namespace SpellCheck.ViewModel
             _TargetCanExecuteMethod = canExecuteMethod;
         }
 
+
+
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged(this, EventArgs.Empty);
@@ -31,7 +34,8 @@ namespace SpellCheck.ViewModel
         {
             if (_TargetCanExecuteMethod != null)
             {
-                return _TargetCanExecuteMethod();
+                var temp = _TargetCanExecuteMethod();
+                return temp;
             }
             if (_TargetExecuteMethod != null)
             {
@@ -56,7 +60,7 @@ namespace SpellCheck.ViewModel
 
 
 
-    class RelayCommand<T> : ICommand
+    public class RelayCommand<T> : ICommand
     {
         private Action<T> execute;
         private Func<T, bool> canExecute;
