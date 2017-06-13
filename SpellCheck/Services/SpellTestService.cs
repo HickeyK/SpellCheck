@@ -1,4 +1,4 @@
-﻿using SpellCheck.Entities;
+﻿using SpellCheck.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +10,17 @@ namespace SpellCheck.Services
 
         Random rnd = new Random();
 
-        public List<Spelling> Questions { get; set; }
+        public List<SpellingViewModel> Questions { get; set; }
 
-        private Spelling _current;
+        private SpellingViewModel _current;
 
 
-        public SpellTestService(SpellTest _spellTest)
+        public SpellTestService(List<SpellingViewModel> _questions)
         {
-            Questions = new List<Spelling>();
-
-            Questions = _spellTest.Spellings;
-
-            //foreach (var spelling in _spellTest.Spellings)
-            //{
-            //    Questions.Add(new Question {
-            //        Word = spelling.Word,
-            //        ContextSentence = spelling.ContextSentence
-            //    } );
-            //}
-
+            Questions = _questions;
         }
 
-        public Spelling NextQuestion()
+        public SpellingViewModel NextQuestion()
         {
             var unanswered = Questions.Where(q => q.CorrectCount < 1);
             if (unanswered.Count() == 0)
@@ -43,7 +32,7 @@ namespace SpellCheck.Services
             return _current;
         }
 
-        public Spelling AnswerQuestion(string answer)
+        public SpellingViewModel AnswerQuestion(string answer)
         {
             if (answer == _current.Word)
             {

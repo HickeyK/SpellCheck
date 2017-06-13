@@ -1,5 +1,6 @@
 ﻿using SpellCheck.Entities;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -112,7 +113,7 @@ namespace SpellCheck.ViewModel
 
         private void OnBegin()
         {
-            AnswerDialogViewModel advm = new AnswerDialogViewModel(CurrentTest);
+            AnswerDialogViewModel advm = new AnswerDialogViewModel(new List<SpellingViewModel>(Spellings));
             var dialog = new View.AnswerDialog(advm);
             dialog.ShowDialog();
             OnPropertyChanged("Spellings");

@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace SpellCheck.ViewModel
 {
-    class SpellingViewModel : INotifyPropertyChanged
+    public class SpellingViewModel : INotifyPropertyChanged
     {
 
         private readonly Spelling _item;

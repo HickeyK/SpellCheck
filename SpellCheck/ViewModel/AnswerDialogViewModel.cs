@@ -1,5 +1,6 @@
 ﻿using SpellCheck.Entities;
 using SpellCheck.Services;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -11,12 +12,11 @@ namespace SpellCheck.ViewModel
 
         private SpellTestService _spellTestService; 
 
-        public AnswerDialogViewModel(SpellTest _spellTest)
+        public AnswerDialogViewModel(List<SpellingViewModel> _spellTests)
         {
-            SpellTest = _spellTest;
+        
 
-
-            _spellTestService = new SpellTestService(_spellTest);
+            _spellTestService = new SpellTestService(_spellTests);
 
             CurrentSpelling = _spellTestService.NextQuestion();
 
@@ -28,7 +28,7 @@ namespace SpellCheck.ViewModel
 
         }
 
-        public SpellTest SpellTest { get; set; }
+        //public SpellTest SpellTest { get; set; }
 
 
         public RelayCommand AnswerCommand { get; set; }
@@ -38,8 +38,8 @@ namespace SpellCheck.ViewModel
 
 
 
-        private Spelling _currentSpelling;
-        public Spelling CurrentSpelling
+        private SpellingViewModel _currentSpelling;
+        public SpellingViewModel CurrentSpelling
         {
             get { return _currentSpelling; }
             set
