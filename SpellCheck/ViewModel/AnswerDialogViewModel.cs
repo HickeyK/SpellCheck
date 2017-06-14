@@ -1,5 +1,4 @@
-﻿using SpellCheck.Entities;
-using SpellCheck.Services;
+﻿using SpellCheck.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -10,19 +9,24 @@ namespace SpellCheck.ViewModel
     {
 
 
-        private SpellTestService _spellTestService; 
+        private SpellTestService _spellTestService;
+        private ISpeachService _speachService;
 
-        public AnswerDialogViewModel(List<SpellingViewModel> _spellTests)
+        public AnswerDialogViewModel(List<SpellingViewModel> spellTests,
+                                     ISpeachService speachService)
         {
-        
 
-            _spellTestService = new SpellTestService(_spellTests);
+            _spellTestService = new SpellTestService(spellTests, speachService);
+            _speachService = speachService;
 
             CurrentSpelling = _spellTestService.NextQuestion();
+            _speachService.Say(CurrentSpelling.Word + ".");
+            _speachService.Say("As in.");
+            _speachService.Say(CurrentSpelling.ContextSentence + ".");
 
 
-            AnswerCommand = new RelayCommand(OnAnswer, CanAnswer);
-            //SkipCommand = new RelayCommand(OnSkip, CanSkip);
+            AnswerCommand = new RelayCommand<Window>(OnAnswer, CanAnswer);
+            SkipCommand = new RelayCommand<Window>(OnSkip, CanSkip);
             QuitCommand = new RelayCommand<Window>(OnQuit);
             //RepeatCommand = new RelayCommand(OnRepeat, CanRepeat);
 
@@ -31,8 +35,8 @@ namespace SpellCheck.ViewModel
         //public SpellTest SpellTest { get; set; }
 
 
-        public RelayCommand AnswerCommand { get; set; }
-        public RelayCommand SkipCommand { get; set; }
+        public RelayCommand<Window> AnswerCommand { get; set; }
+        public RelayCommand<Window> SkipCommand { get; set; }
         public RelayCommand<Window> QuitCommand { get; set; }
         public RelayCommand RepeatCommand { get; set; }
 
@@ -79,7 +83,7 @@ namespace SpellCheck.ViewModel
 
 
 
-        private void OnAnswer()
+        private void OnAnswer(Window window)
         {
             var next = _spellTestService.AnswerQuestion(CurrentAnswer);
             CurrentSpelling = next;
@@ -88,17 +92,56 @@ namespace SpellCheck.ViewModel
             if (next == null)
             {
                 // All questions answered
+
+                OnQuit(window);
+                return;
+
                 // Appears that setting the property to null was not triggering an evaluation of CanExecuteChanged post command execution.
                 // It was being called just before command invocation but the command is already triggered at that point so what's the point.
-                AnswerCommand.RaiseCanExecuteChanged();
+                //AnswerCommand.RaiseCanExecuteChanged();
+                //SkipCommand.RaiseCanExecuteChanged();
 
             }
+            _speachService.Say(CurrentSpelling.Word + ".");
+            _speachService.Say("As in.");
+            _speachService.Say(CurrentSpelling.ContextSentence + ".");
+
+
         }
 
-        private bool CanAnswer()
+        private bool CanAnswer(Window window)
         {
             return CurrentSpelling != null;
         }
+
+        private void OnSkip(Window window)
+        {
+            var next = _spellTestService.SkipQuestion();
+            CurrentSpelling = next;
+            CurrentAnswer = "";
+
+            if (next == null)
+            {
+                // All questions answered
+
+                OnQuit(window);
+
+                // Appears that setting the property to null was not triggering an evaluation of CanExecuteChanged post command execution.
+                // It was being called just before command invocation but the command is already triggered at that point so what's the point.
+
+                //AnswerCommand.RaiseCanExecuteChanged();
+                //SkipCommand.RaiseCanExecuteChanged();
+
+            }
+
+        }
+
+        private bool CanSkip(Window window)
+        {
+            return CurrentSpelling != null;
+        }
+
+
 
         private void OnQuit(Window window)
         {

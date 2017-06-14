@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -72,6 +73,8 @@
     <Compile Include="Migrations\201706110547188_AddTestOccurance.Designer.cs">
       <DependentUpon>201706110547188_AddTestOccurance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\ISpeachService.cs" />
+    <Compile Include="Services\SpeachService.cs" />
     <Compile Include="Services\SpellTestService.cs" />
     <Compile Include="ViewModel\AnswerDialogViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

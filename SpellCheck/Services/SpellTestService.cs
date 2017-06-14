@@ -5,59 +5,60 @@ using System.Linq;
 
 namespace SpellCheck.Services
 {
-    class SpellTestService
+    public class SpellTestService
     {
 
         Random rnd = new Random();
 
-        public List<SpellingViewModel> Questions { get; set; }
+        private List<SpellingViewModel> Questions { get; set; }
 
         private SpellingViewModel _current;
+        private ISpeachService _speachService;
 
 
-        public SpellTestService(List<SpellingViewModel> _questions)
+        public SpellTestService(List<SpellingViewModel> _questions, ISpeachService speachService)
         {
             Questions = _questions;
+            _speachService = speachService;
         }
 
         public SpellingViewModel NextQuestion()
         {
-            var unanswered = Questions.Where(q => q.CorrectCount < 1);
+            var unanswered = Questions.Where(q => q.CorrectCount < 1 && q.Skipped < 1);
             if (unanswered.Count() == 0)
             {
                 return null;
             }
-            int i = rnd.Next(0, unanswered.Count() - 1);
+            int i = rnd.Next(0, unanswered.Count());
             _current = unanswered.ElementAt(i);
             return _current;
         }
 
         public SpellingViewModel AnswerQuestion(string answer)
         {
-            if (answer == _current.Word)
+            if (answer.ToUpper() == _current.Word.ToUpper())
             {
                 _current.CorrectCount += 1;
+                _speachService.Say("Correct.");
             } 
             else
             {
                 _current.ErrorCount += 1;
+                _speachService.Say("Wrong.");
             }
+            return NextQuestion();
+        }
+
+        public SpellingViewModel SkipQuestion()
+        {
+            _current.Skipped += 1;
             return NextQuestion();
         }
 
 
     }
 
-    public class xQuestion
-    {
-        public string Word { get; set; }
-        public string ContextSentence { get; set; }
-        public UInt16 CorrectCount { get; set; }
-        public UInt16 ErrorCount { get; set; }
-        public QuestionResult Result { get; set; }
-
-    }
-
+ 
     public enum QuestionResult
     {
         CORRECT,

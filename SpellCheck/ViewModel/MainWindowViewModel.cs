@@ -1,4 +1,5 @@
 ﻿using SpellCheck.Entities;
+using SpellCheck.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace SpellCheck.ViewModel
 
         private ConnectedRepository _repo;
         //private SpellTestService _service;
-        private Action<SpellTest> ShowAnswerDialog;
+        //private Action<SpellTest> ShowAnswerDialog;
 
         #region Construction
 
@@ -113,7 +114,8 @@ namespace SpellCheck.ViewModel
 
         private void OnBegin()
         {
-            AnswerDialogViewModel advm = new AnswerDialogViewModel(new List<SpellingViewModel>(Spellings));
+            AnswerDialogViewModel advm = new AnswerDialogViewModel(new List<SpellingViewModel>(Spellings),
+                new SpeachService());
             var dialog = new View.AnswerDialog(advm);
             dialog.ShowDialog();
             OnPropertyChanged("Spellings");

@@ -73,6 +73,9 @@
                 <DataGridTextColumn Header="Correct"
                                     Binding="{Binding CorrectCount}"
                                     Width="Auto" />
+                <DataGridTextColumn Header="Skipped"
+                                    Binding="{Binding Skipped}"
+                                    Width="Auto" />
                 <DataGridTextColumn Header="Wrong"
                                     Binding="{Binding ErrorCount}"
                                     Width="Auto" />

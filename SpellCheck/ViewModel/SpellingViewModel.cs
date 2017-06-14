@@ -41,6 +41,18 @@ namespace SpellCheck.ViewModel
                 }
             }
         }
+        public UInt16 Skipped
+        {
+            get { return _item.Skipped; }
+            set
+            {
+                if (_item.Skipped != value)
+                {
+                    _item.Skipped = value;
+                    OnPropertyChanged("Skipped");
+                }
+            }
+        }
 
         public UInt16 ErrorCount
         {

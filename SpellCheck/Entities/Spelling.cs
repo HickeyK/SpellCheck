@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpellCheck.Entities
@@ -12,6 +11,8 @@ namespace SpellCheck.Entities
 
         [NotMapped]
         public UInt16 CorrectCount { get; set; }
+        [NotMapped]
+        public UInt16 Skipped { get; set; }
         [NotMapped]
         public UInt16 ErrorCount { get; set; }
         [NotMapped]
