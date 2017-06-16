@@ -2,6 +2,6 @@
 {
     public interface ISpeachService
     {
-        void Say(string textToSay);
+        void Say(string textToSay, bool async);
     }
 }

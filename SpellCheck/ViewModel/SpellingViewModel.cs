@@ -41,7 +41,7 @@ namespace SpellCheck.ViewModel
                 }
             }
         }
-        public UInt16 Skipped
+        public bool Skipped
         {
             get { return _item.Skipped; }
             set

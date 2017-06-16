@@ -12,7 +12,7 @@ namespace SpellCheck.Entities
         [NotMapped]
         public UInt16 CorrectCount { get; set; }
         [NotMapped]
-        public UInt16 Skipped { get; set; }
+        public bool Skipped { get; set; }
         [NotMapped]
         public UInt16 ErrorCount { get; set; }
         [NotMapped]

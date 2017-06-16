@@ -9,7 +9,7 @@ namespace SpellCheck.ViewModel
     {
 
 
-        private SpellTestService _spellTestService;
+        private ISpellTestService _spellTestService;
         private ISpeachService _speachService;
 
         public AnswerDialogViewModel(List<SpellingViewModel> spellTests,
@@ -20,15 +20,14 @@ namespace SpellCheck.ViewModel
             _speachService = speachService;
 
             CurrentSpelling = _spellTestService.NextQuestion();
-            _speachService.Say(CurrentSpelling.Word + ".");
-            _speachService.Say("As in.");
-            _speachService.Say(CurrentSpelling.ContextSentence + ".");
+
+            RequestSpelling(CurrentSpelling);
 
 
             AnswerCommand = new RelayCommand<Window>(OnAnswer, CanAnswer);
             SkipCommand = new RelayCommand<Window>(OnSkip, CanSkip);
             QuitCommand = new RelayCommand<Window>(OnQuit);
-            //RepeatCommand = new RelayCommand(OnRepeat, CanRepeat);
+            RepeatCommand = new RelayCommand(OnRepeat, CanRepeat);
 
         }
 
@@ -92,7 +91,7 @@ namespace SpellCheck.ViewModel
             if (next == null)
             {
                 // All questions answered
-
+                _speachService.Say("Test Completed", true);
                 OnQuit(window);
                 return;
 
@@ -102,10 +101,8 @@ namespace SpellCheck.ViewModel
                 //SkipCommand.RaiseCanExecuteChanged();
 
             }
-            _speachService.Say(CurrentSpelling.Word + ".");
-            _speachService.Say("As in.");
-            _speachService.Say(CurrentSpelling.ContextSentence + ".");
 
+            RequestSpelling(CurrentSpelling);
 
         }
 
@@ -149,6 +146,28 @@ namespace SpellCheck.ViewModel
             {
                 window.Close();
             }
+        }
+
+
+        private void OnRepeat()
+        {
+            RequestSpelling(CurrentSpelling);
+        }
+
+        private bool CanRepeat()
+        {
+            return CurrentSpelling != null;
+        }
+
+
+        private void RequestSpelling(SpellingViewModel spellingViewModel)
+        {
+            var request = spellingViewModel.Word + "," +
+                "As in," +
+                spellingViewModel.ContextSentence;
+
+            _speachService.Say(request, true);
+
         }
 
 

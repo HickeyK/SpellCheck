@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SpellCheck.Services
 {
-    public class SpellTestService
+    public class SpellTestService : ISpellTestService
     {
 
         Random rnd = new Random();
@@ -13,6 +13,7 @@ namespace SpellCheck.Services
         private List<SpellingViewModel> Questions { get; set; }
 
         private SpellingViewModel _current;
+
         private ISpeachService _speachService;
 
 
@@ -24,7 +25,7 @@ namespace SpellCheck.Services
 
         public SpellingViewModel NextQuestion()
         {
-            var unanswered = Questions.Where(q => q.CorrectCount < 1 && q.Skipped < 1);
+            var unanswered = Questions.Where(q => q.CorrectCount < 1 && !q.Skipped);
             if (unanswered.Count() == 0)
             {
                 return null;
@@ -39,19 +40,19 @@ namespace SpellCheck.Services
             if (answer.ToUpper() == _current.Word.ToUpper())
             {
                 _current.CorrectCount += 1;
-                _speachService.Say("Correct.");
+                _speachService.Say("Correct.", false);
             } 
             else
             {
                 _current.ErrorCount += 1;
-                _speachService.Say("Wrong.");
+                _speachService.Say("Wrong.", false);
             }
             return NextQuestion();
         }
 
         public SpellingViewModel SkipQuestion()
         {
-            _current.Skipped += 1;
+            _current.Skipped = true;
             return NextQuestion();
         }
 

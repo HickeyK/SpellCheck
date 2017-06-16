@@ -10,7 +10,16 @@
         Height="300"
         Width="450"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        FocusManager.FocusedElement="{Binding ElementName=AnswerTxtBx}">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFF36935" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -18,13 +27,18 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        
+        
         <Button x:Name="RepeatCommand"
+                Command="{Binding RepeatCommand, Mode=OneWay}"
                 Content="Repeat Question"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Width="100"
                 Height="30" />
 
+        
+        
         <TextBox x:Name="AnswerTxtBx"
                  Text="{Binding CurrentAnswer, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Center"
@@ -34,10 +48,13 @@
                  Grid.Row="1">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding AnswerCommand}"
+                            CommandParameter="{Binding ElementName=AnswerDlg}"
                             Key="Return" />
             </TextBox.InputBindings>
         </TextBox>
 
+        
+        
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -46,7 +63,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="AnswerButton"
                     Content="Answer"
-                    Command="{Binding AnswerCommand}"
+                    Command="{Binding AnswerCommand, Mode=OneWay}"
                     CommandParameter="{Binding ElementName=AnswerDlg}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -75,15 +92,6 @@
         </Grid>
 
 
-
-        <TextBlock x:Name="Spelling"
-                   Text="{Binding CurrentSpelling.Word}"
-                   HorizontalAlignment="Left"
-                   Margin="290,72,0,0"
-                   Grid.Row="1"
-                   TextWrapping="Wrap"
-                   VerticalAlignment="Top"
-                   Width="125" />
 
     </Grid>
 </Window>
