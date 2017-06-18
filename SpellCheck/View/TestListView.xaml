@@ -1,28 +1,19 @@
-﻿<Window x:Class="SpellCheck.View.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SpellCheck.View"
-        xmlns:vm="clr-namespace:SpellCheck.ViewModel"
-        mc:Ignorable="d"
-        Title="Spelling Test"
-        Height="450"
-        Width="650">
-
-    <Window.DataContext>
-        <vm:MainWindowViewModel />
-    </Window.DataContext>
-
-
-    <Window.Resources>
+﻿<UserControl x:Class="SpellCheck.View.TestListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpellCheck.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize"
                     Value="18" />
             <Setter Property="Foreground"
                     Value="#FFF36935" />
-        </Style>
-
+        </Style>        
         <Style x:Key="TextStyle"
                TargetType="Control">
             <Setter Property="FontSize"
@@ -30,48 +21,14 @@
             <Setter Property="Foreground"
                     Value="#FFF36935" />
         </Style>
-
-        <DataTemplate DataType="{x:Type vm:TestListViewModel}">
-            <local:TestListView />
-        </DataTemplate>
-
-    </Window.Resources>
-
-
+    </UserControl.Resources>
+    
     <Grid>
-
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <Grid x:Name="NavBar">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <Button Content="Test List"
-                    Command="{Binding NavCommand}"
-                    CommandParameter="TestList"
-                    Grid.Column="0" />
-            
-            <Button Content="Add Test"
-                    Command="{Binding NavCommand}"
-                    CommandParameter="AddList"
-                    Grid.Column="2" />
-
-        </Grid>
-        <Grid x:Name="MainContent"
-              Grid.Row="1">
-
-            <ContentControl Content="{Binding CurrentViewModel}" />
-        </Grid>
-
-
-        <!--<DockPanel>
+        <DockPanel>
             <Button Command="{Binding BeginCommand}"
                     Content="Begin"
                     Width="40"
@@ -115,11 +72,8 @@
                 <DataGridTextColumn Header="Wrong"
                                     Binding="{Binding ErrorCount}"
                                     Width="Auto" />
-
             </DataGrid.Columns>
 
-        </DataGrid>-->
-
-
+        </DataGrid>
     </Grid>
-</Window>
+</UserControl>

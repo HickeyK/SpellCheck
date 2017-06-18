@@ -1,134 +1,35 @@
-﻿using SpellCheck.Entities;
-using SpellCheck.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-
-namespace SpellCheck.ViewModel
+﻿namespace SpellCheck.ViewModel
 {
-    class MainWindowViewModel : INotifyPropertyChanged
+    class MainWindowViewModel : BindableBase
     {
+        private TestListViewModel _TestListViewModel = new TestListViewModel();
 
-        private ConnectedRepository _repo;
-        //private SpellTestService _service;
-        //private Action<SpellTest> ShowAnswerDialog;
-
-        #region Construction
-
+        public BindableBase _CurrentViewModel;
 
         public MainWindowViewModel()
         {
-
-            if (DesignerProperties.GetIsInDesignMode(
-                new System.Windows.DependencyObject())) return;
-
-
-            _repo = new ConnectedRepository();
-
-            //_service = new SpellTestService();
-
-            // Pass in the repo
-            Tests = new ObservableCollection<SpellTest>(_repo.GetTests());
-            _currentTest = new SpellTest();
-
-            BeginCommand = new RelayCommand(OnBegin, CanBegin);
-
+            NavCommand = new RelayCommand<string>(OnNav);
         }
 
-        #endregion
-
-
-
-
-
-        #region Properties
-
-
-        public RelayCommand BeginCommand { get; set; }
-
-        public ObservableCollection<SpellTest> Tests { get; set; }
-
-
-        private SpellTest _currentTest;
-        public SpellTest CurrentTest
+        public BindableBase CurrentViewModel
         {
-            get
+            get { return _CurrentViewModel; }
+            set { SetProperty(ref _CurrentViewModel, value); }
+        }
+
+
+        public RelayCommand<string> NavCommand { get; set; }
+
+        private void OnNav(string destination)
+        {
+            switch (destination)
             {
-                return _currentTest;
-            }
-
-            set
-            {
-                if (_currentTest.Id == value.Id) return;
-
-                _currentTest = value;
-
-
-                Spellings = new ObservableCollection<SpellingViewModel>(
-
-                    _repo.GetSpellings(_currentTest.Id).Select(
-                        s => new SpellingViewModel(s)
-                      )
-                    );
-
+                case "TestList":
+                    CurrentViewModel = _TestListViewModel;
+                    break;
             }
         }
 
-        private ObservableCollection<SpellingViewModel> _spellings;
-        public ObservableCollection<SpellingViewModel> Spellings
-        {
-            get
-            {
-                return _spellings;
-            }
-            set
-            {
-                _spellings = value;
-                OnPropertyChanged("Spellings");
-            }
-        }
-
-
-        #endregion
-
-
-        #region INPC
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        #endregion
-
-
-
-        #region EventHandling
-
-
-        private void OnBegin()
-        {
-            AnswerDialogViewModel advm = new AnswerDialogViewModel(new List<SpellingViewModel>(Spellings),
-                new SpeachService());
-            var dialog = new View.AnswerDialog(advm);
-            dialog.ShowDialog();
-            OnPropertyChanged("Spellings");
-
-        }
-
-        private bool CanBegin()
-        {
-            return _currentTest != null;
-        }
-
-
-        #endregion
 
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpellCheck.View"
+        xmlns:vm="clr-namespace:SpellCheck.ViewModel"
         mc:Ignorable="d"
         x:Name="AnswerDlg"
         Title="Spelling Test"
@@ -19,8 +20,10 @@
             <Setter Property="Foreground"
                     Value="#FFF36935" />
         </Style>
+
     </Window.Resources>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -53,8 +56,8 @@
             </TextBox.InputBindings>
         </TextBox>
 
-        
-        
+
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -68,8 +71,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="100"
-                    Height="30"
-                     />
+                    Height="30" />
             <Button x:Name="SkipButton"
                     Content="Skip Spelling"
                     Command="{Binding SkipCommand, Mode=OneWay}"
@@ -78,8 +80,7 @@
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Width="100"
-                    Height="30"
-                     />
+                    Height="30" />
             <Button x:Name="CloseButton"
                     Command="{Binding QuitCommand, Mode=OneWay}"
                     CommandParameter="{Binding ElementName=AnswerDlg}"
@@ -90,7 +91,6 @@
                     Width="100"
                     Height="30" />
         </Grid>
-
 
 
     </Grid>
