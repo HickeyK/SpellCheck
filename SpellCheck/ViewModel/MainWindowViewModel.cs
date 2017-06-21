@@ -16,7 +16,7 @@ namespace SpellCheck.ViewModel
 
         #endregion
 
-        #region constructors
+        #region Constructors
 
         public MainWindowViewModel()
         {
@@ -89,11 +89,14 @@ namespace SpellCheck.ViewModel
         protected void OnBegin()
         {
 
-            AnswerDialogViewModel advm = new AnswerDialogViewModel(((TestListViewModel)CurrentViewModel).Spellings,
+            AnswerViewModel avm = new AnswerViewModel(((TestListViewModel)CurrentViewModel).Spellings,
                 new SpeachService());
 
-            var dialog = new View.AnswerDialog(advm);
-            dialog.ShowDialog();
+            avm.Done += NavToTestList;
+
+            CurrentViewModel = avm;
+            //var dialog = new View.AnswerDialog(advm);
+            //dialog.ShowDialog();
             OnPropertyChanged("Spellings");
         }
 
@@ -163,6 +166,7 @@ namespace SpellCheck.ViewModel
         {
             if (window != null) window.Close();
         }
+
 
         #endregion
     }

@@ -23,6 +23,9 @@
         <DataTemplate DataType="{x:Type vm:AddEditTestViewModel}">
             <local:AddEditTestView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AnswerViewModel}">
+            <local:AnswerView />
+        </DataTemplate>
 
     </Window.Resources>
 

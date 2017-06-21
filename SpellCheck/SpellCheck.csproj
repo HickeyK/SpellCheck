@@ -84,11 +84,15 @@
     <Compile Include="Services\SpellTestService.cs" />
     <Compile Include="ViewModel\AddEditTestViewModel.cs" />
     <Compile Include="ViewModel\AnswerDialogViewModel.cs" />
+    <Compile Include="ViewModel\AnswerViewModel.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TestListViewModel.cs" />
     <Compile Include="View\AddEditTestView.xaml.cs">
       <DependentUpon>AddEditTestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AnswerView.xaml.cs">
+      <DependentUpon>AnswerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TestListView.xaml.cs">
       <DependentUpon>TestListView.xaml</DependentUpon>
@@ -106,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AnswerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
