@@ -11,9 +11,14 @@ namespace SpellCheck.ViewModel
     public class TestListViewModel : BindableBase
     {
 
+        #region fields
+
         private ConnectedRepository _repo;
         //private SpellTestService _service;
         //private Action<SpellTest> ShowAnswerDialog;
+
+
+        #endregion
 
         #region Construction
 
@@ -29,10 +34,9 @@ namespace SpellCheck.ViewModel
 
 
             Tests = new ObservableCollection<SpellTest>(_repo.GetTests());
-            //_currentTest = Tests.FirstOrDefault();
+            _currentTest = Tests.FirstOrDefault();
 
             //BeginCommand = new RelayCommand(OnBegin, CanBegin);
-
         }
 
         #endregion
@@ -69,7 +73,6 @@ namespace SpellCheck.ViewModel
                         s => new SpellingViewModel(s)
                       )
                     );
-
             }
         }
 

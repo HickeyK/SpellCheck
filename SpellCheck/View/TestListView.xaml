@@ -36,11 +36,7 @@
                   CanUserAddRows="False"
                   IsReadOnly="True"
                   >
-            <!--<DataGrid.ColumnHeaderStyle>
-                <Style>
-                    <Setter Property="Margin" Value="Pink" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>-->
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Word"
                                     Binding="{Binding Word}"

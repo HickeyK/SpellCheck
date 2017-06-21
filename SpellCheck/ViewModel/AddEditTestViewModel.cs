@@ -11,13 +11,14 @@ namespace SpellCheck.ViewModel
 {
     class AddEditTestViewModel : BindableBase
     {
+        #region Fields
+
         private ConnectedRepository _repo;
 
+        #endregion
 
-        public RelayCommand SaveCommand { get; set; }
-        public RelayCommand CancelCommand { get; set; }
 
-        public event Action Done = delegate { };
+        #region Constructors
 
         public AddEditTestViewModel(ConnectedRepository repo)
         {
@@ -30,6 +31,21 @@ namespace SpellCheck.ViewModel
             CancelCommand = new RelayCommand(OnCancel);
         }
 
+
+        #endregion
+
+        #region Events
+
+        public event Action Done = delegate { };
+
+        #endregion
+
+
+        #region Properties
+
+        public RelayCommand SaveCommand { get; set; }
+
+        public RelayCommand CancelCommand { get; set; }
 
         private bool _editMode;
         public bool EditMode
@@ -47,7 +63,6 @@ namespace SpellCheck.ViewModel
         }
 
 
-
         private ObservableCollection<SpellingViewModel> _spellings;
         public ObservableCollection<SpellingViewModel> Spellings
         {
@@ -55,6 +70,15 @@ namespace SpellCheck.ViewModel
             set { SetProperty(ref _spellings, value); }
         }
 
+        #endregion
+
+
+        #region Methods
+        #endregion
+
+
+
+        #region EventHandlers
 
         protected void OnSave()
         {
@@ -81,6 +105,7 @@ namespace SpellCheck.ViewModel
         }
 
 
+        #endregion
     }
 
 }

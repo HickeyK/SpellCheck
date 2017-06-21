@@ -24,7 +24,6 @@
             <local:AddEditTestView />
         </DataTemplate>
 
-
     </Window.Resources>
 
 
@@ -53,19 +52,19 @@
             <Button Content="Begin Test"
                     Command="{Binding BeginCommand}"
                     Grid.Column="0"
-                    Margin="3,3,0,3"/>
+                    Margin="3,3,0,3" />
 
             <Button Content="Add Test"
                     Command="{Binding NavCommand}"
                     CommandParameter="AddTest"
                     Grid.Column="1"
-                    Margin="3,3,0,3"/>
+                    Margin="3,3,0,3" />
 
             <Button Content="Edit Test"
                     Command="{Binding NavCommand}"
                     CommandParameter="EditTest"
                     Grid.Column="2"
-                    Margin="3,3,0,3"/>
+                    Margin="3,3,0,3" />
 
             <Button Content="Quit"
                     Command="{Binding QuitCommand}"
@@ -74,8 +73,8 @@
                     Margin="3,3,3,3" />
 
         </Grid>
-        
-        
+
+
 
     </Grid>
 </Window>
