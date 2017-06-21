@@ -4,6 +4,7 @@ using SpellCheck.Entities;
 using SpellCheck.ViewModel;
 using System.Collections.Generic;
 using Xunit;
+using System.Collections.ObjectModel;
 
 namespace Services.Tests
 {
@@ -17,7 +18,7 @@ namespace Services.Tests
         {
             // Arrange
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
@@ -42,7 +43,7 @@ namespace Services.Tests
         {
             // Arrange
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
@@ -68,7 +69,7 @@ namespace Services.Tests
         {
             // Arrange
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
@@ -95,7 +96,7 @@ namespace Services.Tests
 
             // Arrange
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
@@ -120,7 +121,7 @@ namespace Services.Tests
         {
 
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
@@ -144,7 +145,7 @@ namespace Services.Tests
         {
 
             Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            List<SpellingViewModel> spellings = new List<SpellingViewModel>();
+            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
             Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);

@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using SpellCheck.Entities;
 using SpellCheck.Services;
-using SpellCheck.Entities;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Collections.Generic;
+using System.Windows;
 
 namespace SpellCheck.ViewModel
 {
@@ -22,15 +22,18 @@ namespace SpellCheck.ViewModel
         {
             BeginCommand = new RelayCommand(OnBegin, CanBegin);
             NavCommand = new RelayCommand<string>(OnNav);
+            EditCommand = new RelayCommand(OnEdit, CanEdit);
             QuitCommand = new RelayCommand<Window>(OnQuit);
 
             _TestListViewModel = new TestListViewModel(_repo);
             _AddEditTestViewModel = new AddEditTestViewModel(_repo);
 
             _AddEditTestViewModel.Done += NavToTestList;
+            _AddEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
             _TestListViewModel.PropertyChanged += TestListViewModel_PropertyChanged;
             CurrentViewModel = _TestListViewModel;
         }
+
 
         #endregion
 
@@ -39,6 +42,7 @@ namespace SpellCheck.ViewModel
 
         public RelayCommand BeginCommand { get; set; }
         public RelayCommand<string> NavCommand { get; set; }
+        public RelayCommand EditCommand { get; set; }
         public RelayCommand<Window> QuitCommand { get; set; }
 
 
@@ -51,6 +55,7 @@ namespace SpellCheck.ViewModel
             {
                 SetProperty(ref _CurrentViewModel, value);
                 BeginCommand.RaiseCanExecuteChanged();
+                EditCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -71,9 +76,14 @@ namespace SpellCheck.ViewModel
             if (e.PropertyName == "CurrentTest")
             {
                 BeginCommand.RaiseCanExecuteChanged();
+                EditCommand.RaiseCanExecuteChanged();
             }
         }
 
+        private void _AddEditTestViewModel_SpellingAdded()
+        {
+            _TestListViewModel.Tests.Add(_AddEditTestViewModel.CurrentTest);
+        }
 
 
         protected void OnBegin()
@@ -111,24 +121,37 @@ namespace SpellCheck.ViewModel
 
                 case "AddTest":
                     _AddEditTestViewModel.CurrentTest = new SpellTest();
-                    _AddEditTestViewModel.Spellings = new System.Collections.ObjectModel.ObservableCollection<SpellingViewModel>();
-                    //_AddEditTestViewModel.Spellings.Add(new SpellingViewModel(new Spelling()));
+                    _AddEditTestViewModel.Spellings = new ObservableCollection<SpellingViewModel>();
                     _AddEditTestViewModel.EditMode = false;
                     CurrentViewModel = _AddEditTestViewModel;
                     break;
 
-                case "EditTest":
-                    _AddEditTestViewModel.CurrentTest = _TestListViewModel.CurrentTest;
-                    _AddEditTestViewModel.Spellings = _TestListViewModel.Spellings; ;
-                    _AddEditTestViewModel.EditMode = true;
-                    CurrentViewModel = _AddEditTestViewModel;
-                    break;
-
-                case "Quit":
-
-                    break;
             }
         }
+
+
+        protected void OnEdit()
+        {
+            _AddEditTestViewModel.CurrentTest = _TestListViewModel.CurrentTest;
+            _AddEditTestViewModel.Spellings = _TestListViewModel.Spellings; ;
+            _AddEditTestViewModel.EditMode = true;
+            CurrentViewModel = _AddEditTestViewModel;
+        }
+
+        protected bool CanEdit()
+        {
+
+            if (CurrentViewModel.GetType() == typeof(TestListViewModel))
+            {
+                if (((TestListViewModel)CurrentViewModel).CurrentTest != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
 
         private void NavToTestList()
         {

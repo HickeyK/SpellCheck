@@ -29,6 +29,7 @@ namespace SpellCheck.ViewModel
 
             SaveCommand = new RelayCommand(OnSave);
             CancelCommand = new RelayCommand(OnCancel);
+            DeleteCommand = new RelayCommand<SpellingViewModel>(OnDelete);
         }
 
 
@@ -37,6 +38,7 @@ namespace SpellCheck.ViewModel
         #region Events
 
         public event Action Done = delegate { };
+        public event Action SpellingAdded = delegate { };
 
         #endregion
 
@@ -46,6 +48,8 @@ namespace SpellCheck.ViewModel
         public RelayCommand SaveCommand { get; set; }
 
         public RelayCommand CancelCommand { get; set; }
+
+        public RelayCommand<SpellingViewModel> DeleteCommand { get; set; }
 
         private bool _editMode;
         public bool EditMode
@@ -80,6 +84,11 @@ namespace SpellCheck.ViewModel
 
         #region EventHandlers
 
+        protected void OnDelete(SpellingViewModel spellingViewModel)
+        {
+            Spellings.Remove(spellingViewModel);
+        }
+
         protected void OnSave()
         {
             CurrentTest.Spellings = new List<Spelling>();
@@ -95,6 +104,7 @@ namespace SpellCheck.ViewModel
             else
             {
                 _repo.AddTest(CurrentTest);
+                SpellingAdded();
             }
             Done();
         }

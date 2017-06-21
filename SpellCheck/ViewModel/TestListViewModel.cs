@@ -34,7 +34,7 @@ namespace SpellCheck.ViewModel
 
 
             Tests = new ObservableCollection<SpellTest>(_repo.GetTests());
-            _currentTest = Tests.FirstOrDefault();
+            //CurrentTest = Tests.FirstOrDefault();
 
             //BeginCommand = new RelayCommand(OnBegin, CanBegin);
         }

@@ -61,8 +61,7 @@
                     Margin="3,3,0,3" />
 
             <Button Content="Edit Test"
-                    Command="{Binding NavCommand}"
-                    CommandParameter="EditTest"
+                    Command="{Binding EditCommand}"
                     Grid.Column="2"
                     Margin="3,3,0,3" />
 
