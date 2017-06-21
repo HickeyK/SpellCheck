@@ -5,7 +5,7 @@ using System.Linq;
 namespace SpellCheck
 {
 
-    class ConnectedRepository
+    public class ConnectedRepository
     {
         private readonly SpellCheckContext _context = new SpellCheckContext();
 
@@ -23,10 +23,24 @@ namespace SpellCheck
 
             var spellTest = _context.SpellTest.Include("Spellings").Where(st => st.Id == testId);
 
-
             var t = spellTest.FirstOrDefault();
 
             return spellTest.FirstOrDefault().Spellings;
         }
+
+        public void AddTest(SpellTest test)
+        {
+            _context.SpellTest.Add(test);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTest(SpellTest test)
+        {
+            //_context.SpellTest.Attach(test);
+            _context.SaveChanges();
+        }
+
     }
+
+
 }

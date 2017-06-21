@@ -7,119 +7,78 @@
         xmlns:vm="clr-namespace:SpellCheck.ViewModel"
         mc:Ignorable="d"
         Title="Spelling Test"
-        Height="450"
-        Width="650">
+        Height="630"
+        Width="1000"
+        Name="SpellCheckMain">
 
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
-
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="18" />
-            <Setter Property="Foreground"
-                    Value="#FFF36935" />
-        </Style>
-
-        <Style x:Key="TextStyle"
-               TargetType="Control">
-            <Setter Property="FontSize"
-                    Value="18" />
-            <Setter Property="Foreground"
-                    Value="#FFF36935" />
-        </Style>
 
         <DataTemplate DataType="{x:Type vm:TestListViewModel}">
             <local:TestListView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AddEditTestViewModel}">
+            <local:AddEditTestView />
+        </DataTemplate>
 
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="SeparatorBrush"
+                    Value="DarkRed" />
+        </Style>
     </Window.Resources>
 
 
     <Grid>
 
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid x:Name="NavBar">
+        <Grid x:Name="MainContent"
+              Grid.Row="0"
+              Margin="3">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Grid>
+
+        <Grid x:Name="NavBar"
+              Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
-            <Button Content="Test List"
-                    Command="{Binding NavCommand}"
-                    CommandParameter="TestList"
-                    Grid.Column="0" />
-            
+
+            <Button Content="Begin Test"
+                    Command="{Binding BeginCommand}"
+                    Grid.Column="0"
+                    Margin="3,3,0,3"/>
+
             <Button Content="Add Test"
                     Command="{Binding NavCommand}"
-                    CommandParameter="AddList"
-                    Grid.Column="2" />
+                    CommandParameter="AddTest"
+                    Grid.Column="1"
+                    Margin="3,3,0,3"/>
+
+            <Button Content="Edit Test"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="EditTest"
+                    Grid.Column="2"
+                    Margin="3,3,0,3"/>
+
+            <Button Content="Quit"
+                    Command="{Binding QuitCommand}"
+                    CommandParameter="{Binding ElementName=SpellCheckMain}"
+                    Grid.Column="3"
+                    Margin="3,3,3,3" />
 
         </Grid>
-        <Grid x:Name="MainContent"
-              Grid.Row="1">
-
-            <ContentControl Content="{Binding CurrentViewModel}" />
-        </Grid>
-
-
-        <!--<DockPanel>
-            <Button Command="{Binding BeginCommand}"
-                    Content="Begin"
-                    Width="40"
-                    DockPanel.Dock="Right">
-            </Button>
-
-            <ComboBox x:Name="Tests"
-                      ItemsSource="{Binding Tests}"
-                      SelectedItem="{Binding CurrentTest}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <DataTemplate.Resources>
-                            <Style TargetType="TextBlock"
-                                   BasedOn="{StaticResource {x:Type TextBlock}}" />
-                        </DataTemplate.Resources>
-                        <TextBlock Text="{Binding Description}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-
-        <DataGrid ItemsSource="{Binding Spellings}"
-                  Grid.Row="1"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  IsReadOnly="True"
-                  Style="{StaticResource TextStyle}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Word"
-                                    Binding="{Binding Word}"
-                                    MinWidth="200" />
-                <DataGridTextColumn Header="Sentence"
-                                    Binding="{Binding ContextSentence}"
-                                    Width="*" />
-                <DataGridTextColumn Header="Correct"
-                                    Binding="{Binding CorrectCount}"
-                                    Width="Auto" />
-                <DataGridTextColumn Header="Skipped"
-                                    Binding="{Binding Skipped}"
-                                    Width="Auto" />
-                <DataGridTextColumn Header="Wrong"
-                                    Binding="{Binding ErrorCount}"
-                                    Width="Auto" />
-
-            </DataGrid.Columns>
-
-        </DataGrid>-->
-
+        
+        
 
     </Grid>
 </Window>

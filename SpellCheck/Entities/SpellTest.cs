@@ -5,6 +5,12 @@ namespace SpellCheck.Entities
 {
     public class SpellTest
     {
+        public SpellTest()
+        {
+            DateCreated = DateTime.Today;
+            Spellings = new List<Spelling>();
+        }
+
         public int Id { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }

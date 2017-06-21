@@ -13,5 +13,6 @@ namespace SpellCheck
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

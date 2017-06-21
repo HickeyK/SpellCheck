@@ -1,6 +1,7 @@
 ﻿using SpellCheck.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SpellCheck.Services
@@ -10,14 +11,14 @@ namespace SpellCheck.Services
 
         Random rnd = new Random();
 
-        private List<SpellingViewModel> Questions { get; set; }
+        private ObservableCollection<SpellingViewModel> Questions { get; set; }
 
         private SpellingViewModel _current;
 
         private ISpeachService _speachService;
 
 
-        public SpellTestService(List<SpellingViewModel> _questions, ISpeachService speachService)
+        public SpellTestService(ObservableCollection<SpellingViewModel> _questions, ISpeachService speachService)
         {
             Questions = _questions;
             _speachService = speachService;

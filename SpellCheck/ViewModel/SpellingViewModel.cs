@@ -9,9 +9,19 @@ namespace SpellCheck.ViewModel
 
         private readonly Spelling _item;
 
+        public SpellingViewModel()
+        {
+            _item = new Spelling();
+        }
+
         public SpellingViewModel(Spelling spelling)
         {
             _item = spelling;
+        }
+
+        public Spelling GetItem()
+        {
+            return _item;
         }
 
 

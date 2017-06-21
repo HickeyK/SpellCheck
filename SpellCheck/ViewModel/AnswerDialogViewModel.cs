@@ -1,5 +1,6 @@
 ﻿using SpellCheck.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
@@ -12,7 +13,7 @@ namespace SpellCheck.ViewModel
         private ISpellTestService _spellTestService;
         private ISpeachService _speachService;
 
-        public AnswerDialogViewModel(List<SpellingViewModel> spellTests,
+        public AnswerDialogViewModel(ObservableCollection<SpellingViewModel> spellTests,
                                      ISpeachService speachService)
         {
 

@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace SpellCheck.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddEditTestView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddEditTestView : UserControl
     {
-        public MainWindow()
+        public AddEditTestView()
         {
             InitializeComponent();
-            Style = (Style)FindResource(typeof(Window));
         }
     }
 }
