@@ -5,11 +5,15 @@
              xmlns:vm="clr-namespace:SpellCheck.View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type Window}">
-            <Setter Property="FontSize"
-                    Value="18" />
-            <Setter Property="Foreground"
-                    Value="Black" />
-        </Style>         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SpellCheck;component/Resources/WindowStyle.xaml" />
+                <ResourceDictionary Source="/SpellCheck;component/Resources/DataGridStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+
+
+
     </Application.Resources>
 </Application>

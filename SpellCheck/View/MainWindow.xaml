@@ -24,10 +24,7 @@
             <local:AddEditTestView />
         </DataTemplate>
 
-        <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="SeparatorBrush"
-                    Value="DarkRed" />
-        </Style>
+
     </Window.Resources>
 
 

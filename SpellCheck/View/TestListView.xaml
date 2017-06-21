@@ -8,8 +8,12 @@
              d:DesignHeight="300"
              d:DesignWidth="950">
 
-    <UserControl.Resources>
-    </UserControl.Resources>
+    <!--<UserControl.Resources>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="SeparatorBrush"
+                    Value="DarkRed" />
+        </Style>
+    </UserControl.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +34,8 @@
                   Grid.Row="1"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  IsReadOnly="True">
+                  IsReadOnly="True"
+                  >
             <!--<DataGrid.ColumnHeaderStyle>
                 <Style>
                     <Setter Property="Margin" Value="Pink" />
