@@ -1,10 +1,9 @@
 ﻿using Moq;
-using SpellCheck.Services;
 using SpellCheck.Entities;
+using SpellCheck.Services;
 using SpellCheck.ViewModel;
-using System.Collections.Generic;
-using Xunit;
 using System.Collections.ObjectModel;
+using Xunit;
 
 namespace Services.Tests
 {

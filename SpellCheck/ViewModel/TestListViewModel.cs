@@ -1,7 +1,4 @@
 ﻿using SpellCheck.Entities;
-using SpellCheck.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,9 +10,7 @@ namespace SpellCheck.ViewModel
 
         #region fields
 
-        private ConnectedRepository _repo;
-        //private SpellTestService _service;
-        //private Action<SpellTest> ShowAnswerDialog;
+        private IConnectedRepository _repo;
 
 
         #endregion
@@ -23,7 +18,7 @@ namespace SpellCheck.ViewModel
         #region Construction
 
 
-        public TestListViewModel(ConnectedRepository repo)
+        public TestListViewModel(IConnectedRepository repo)
         {
 
             if (DesignerProperties.GetIsInDesignMode(
@@ -35,8 +30,6 @@ namespace SpellCheck.ViewModel
 
             Tests = new ObservableCollection<SpellTest>(_repo.GetTests());
             //CurrentTest = Tests.FirstOrDefault();
-
-            //BeginCommand = new RelayCommand(OnBegin, CanBegin);
         }
 
         #endregion
@@ -46,8 +39,6 @@ namespace SpellCheck.ViewModel
 
 
         #region Properties
-
-        //public RelayCommand BeginCommand { get; set; }
 
 
         public ObservableCollection<SpellTest> Tests { get; set; }
@@ -64,8 +55,6 @@ namespace SpellCheck.ViewModel
                 if (_currentTest != null && _currentTest.Id == value.Id) return;
 
                 SetProperty(ref _currentTest, value);
-                //BeginCommand.RaiseCanExecuteChanged();
-                //_currentTest = value;
 
                 Spellings = new ObservableCollection<SpellingViewModel>(
 
@@ -79,14 +68,10 @@ namespace SpellCheck.ViewModel
         private ObservableCollection<SpellingViewModel> _spellings;
         public ObservableCollection<SpellingViewModel> Spellings
         {
-            get
-            {
-                return _spellings;
-            }
+            get {return _spellings; }
             set
             {
-                _spellings = value;
-                OnPropertyChanged("Spellings");
+                SetProperty(ref _spellings, value);
             }
         }
 

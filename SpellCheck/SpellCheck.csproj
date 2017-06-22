@@ -73,10 +73,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataModel\IConnectedRepository.cs" />
+    <Compile Include="Entities\TestAnswer.cs" />
     <Compile Include="Entities\TestOccurance.cs" />
     <Compile Include="Migrations\201706110547188_AddTestOccurance.cs" />
     <Compile Include="Migrations\201706110547188_AddTestOccurance.Designer.cs">
       <DependentUpon>201706110547188_AddTestOccurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706220801472_AddDateTaken.cs" />
+    <Compile Include="Migrations\201706220801472_AddDateTaken.Designer.cs">
+      <DependentUpon>201706220801472_AddDateTaken.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\ISpeachService.cs" />
     <Compile Include="Services\ISpellTestService.cs" />
@@ -88,6 +94,7 @@
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TestListViewModel.cs" />
+    <Compile Include="ViewModel\TestOccuranceViewModel.cs" />
     <Compile Include="View\AddEditTestView.xaml.cs">
       <DependentUpon>AddEditTestView.xaml</DependentUpon>
     </Compile>
@@ -174,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706110547188_AddTestOccurance.resx">
       <DependentUpon>201706110547188_AddTestOccurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706220801472_AddDateTaken.resx">
+      <DependentUpon>201706220801472_AddDateTaken.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
