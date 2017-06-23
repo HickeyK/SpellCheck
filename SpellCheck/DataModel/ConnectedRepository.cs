@@ -46,7 +46,7 @@ namespace SpellCheck
 
         public List<TestAnswer> GetAnswers(int testOccuranceId)
         {
-            var t = _context.TestAnswer.Where(a => a.Id == testOccuranceId).ToList();
+            var t = _context.TestAnswer.Where(a => a.TestOccuranceId == testOccuranceId).ToList();
             return t;
         }
 

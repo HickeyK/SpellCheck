@@ -170,6 +170,7 @@ namespace SpellCheck.ViewModel
 
         private void OnShowResults()
         {
+            _TestOccuranceViewModel.CurrentTest = _TestListViewModel.CurrentTest;
             CurrentViewModel = _TestOccuranceViewModel;
         }
 

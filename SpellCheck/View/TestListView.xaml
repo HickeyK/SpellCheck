@@ -8,12 +8,6 @@
              d:DesignHeight="300"
              d:DesignWidth="950">
 
-    <!--<UserControl.Resources>
-        <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="SeparatorBrush"
-                    Value="DarkRed" />
-        </Style>
-    </UserControl.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>

@@ -23,7 +23,7 @@
                 Content="Repeat Question"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Width="100"
+                Width="150"
                 Height="30" />
 
 
@@ -56,7 +56,7 @@
                     CommandParameter="{Binding ElementName=AnswerDlg}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="100"
+                    Width="150"
                     Height="30" />
             <Button x:Name="SkipButton"
                     Content="Skip Spelling"
@@ -65,7 +65,7 @@
                     HorizontalAlignment="Center"
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Width="100"
+                    Width="150"
                     Height="30" />
             <Button x:Name="CloseButton"
                     Command="{Binding QuitCommand, Mode=OneWay}"
@@ -74,7 +74,7 @@
                     Content="Close"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="100"
+                    Width="150"
                     Height="30" />
         </Grid>
 

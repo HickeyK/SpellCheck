@@ -1,25 +1,71 @@
 ﻿<UserControl x:Class="SpellCheck.View.TestOccuranceView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SpellCheck.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
         </Grid.RowDefinitions>
-        <ComboBox x:Name="TestOccurances"
-                  ItemsSource="{Binding TestOccurances}"
-                  SelectedItem="{Binding CurrentTest}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Description}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Date Test Taken:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="TestOccurances"
+                      ItemsSource="{Binding TestOccurances}"
+                      SelectedItem="{Binding CurrentTestOccurance}"
+                      Grid.Column="2"
+                      VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DateTestTaken, StringFormat=dd-MM-yyyy hh:mm:ss tt}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+
+        <DataGrid
+            ItemsSource="{Binding Answers}"
+            Grid.Row="1"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            IsReadOnly="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Answer Given"
+                                    Binding="{Binding FinalAnswer}"
+                                    MinWidth="200" />
+                <DataGridTextColumn Header="Number of Tries"
+                                    Binding="{Binding NumberOfTries}"
+                                    MinWidth="200" />
+
+                <DataGridTextColumn Header="Status Text"
+                                    Binding="{Binding AnswerStatus}"
+                                    MinWidth="200" />
+
+                <!-- Could not get this to bind to the AnswerStatus property -->
+                <!--<DataGridComboBoxColumn Header="Status"
+                                        ItemsSource="{Binding Source={StaticResource EnumDataProvider}}"
+                                        SelectedItemBinding="{Binding Path=AnswerStatus}"
+                                    MinWidth="200" />-->
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+        
+        <Grid Grid.Row="2">
+            <Button Content="Back to List"
+                    Width="200"
+                    Command="{Binding BackCommand}" />
+        </Grid>
 
     </Grid>
 </UserControl>

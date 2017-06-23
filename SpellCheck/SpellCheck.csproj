@@ -88,6 +88,14 @@
     <Compile Include="Migrations\201706221156195_AddAnswers.Designer.cs">
       <DependentUpon>201706221156195_AddAnswers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706230516484_AddTestIdToTestAnswer.cs" />
+    <Compile Include="Migrations\201706230516484_AddTestIdToTestAnswer.Designer.cs">
+      <DependentUpon>201706230516484_AddTestIdToTestAnswer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706230607496_AddTestOccuranceId.cs" />
+    <Compile Include="Migrations\201706230607496_AddTestOccuranceId.Designer.cs">
+      <DependentUpon>201706230607496_AddTestOccuranceId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\ISpeachService.cs" />
     <Compile Include="Services\ISpellTestService.cs" />
     <Compile Include="Services\SpeachService.cs" />
@@ -112,6 +120,10 @@
       <DependentUpon>TestOccuranceView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\DataGridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Misc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706221156195_AddAnswers.resx">
       <DependentUpon>201706221156195_AddAnswers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706230516484_AddTestIdToTestAnswer.resx">
+      <DependentUpon>201706230516484_AddTestIdToTestAnswer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706230607496_AddTestOccuranceId.resx">
+      <DependentUpon>201706230607496_AddTestOccuranceId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

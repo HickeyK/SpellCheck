@@ -1,6 +1,7 @@
 ﻿using SpellCheck.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SpellCheck.ViewModel
 {
@@ -34,15 +35,16 @@ namespace SpellCheck.ViewModel
 
         #region Properties
 
-        private SpellTest _spellTest;
+        private SpellTest _currentTest;
 
-    public SpellTest SpellTest
+        public SpellTest CurrentTest
         {
-            get { return _spellTest; }
+            get { return _currentTest; }
             set
             {
-                SetProperty(ref _spellTest, value);
-                TestOccurances = new ObservableCollection<TestOccurance>(_repo.GetTestOccurances(_spellTest.Id));
+                SetProperty(ref _currentTest, value);
+                TestOccurances = new ObservableCollection<TestOccurance>(_repo.GetTestOccurances(_currentTest.Id));
+                CurrentTestOccurance = TestOccurances.FirstOrDefault();
             }
         }
 
@@ -77,12 +79,13 @@ namespace SpellCheck.ViewModel
                 Answers = new ObservableCollection<TestAnswer>(
                     _repo.GetAnswers(CurrentTestOccurance.Id));
 
-                    //_repo.GetAnswers(_currentTestOccurance.Id).Select(
-                    //    s => new SpellingViewModel(s)
-                    //  )
-                    //);
+                //_repo.GetAnswers(_currentTestOccurance.Id).Select(
+                //    s => new SpellingViewModel(s)
+                //  )
+                //);
             }
         }
+
 
         private ObservableCollection<TestAnswer> _answers;
         public ObservableCollection<TestAnswer> Answers

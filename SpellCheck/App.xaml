@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SpellCheck;component/Resources/WindowStyle.xaml" />
                 <ResourceDictionary Source="/SpellCheck;component/Resources/DataGridStyle.xaml" />
+                <ResourceDictionary Source="/SpellCheck;component/Resources/Misc.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
