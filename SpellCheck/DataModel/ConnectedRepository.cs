@@ -13,9 +13,7 @@ namespace SpellCheck
 
         public List<SpellTest> GetTests()
         {
-
             return _context.SpellTest.ToList();
-
         }
 
         public List<Spelling> GetSpellings(int testId)
@@ -40,6 +38,16 @@ namespace SpellCheck
             _context.SaveChanges();
         }
 
+        public List<TestOccurance> GetTestOccurances()
+        {
+            return _context.TestOccurance.ToList();
+        }
+
+        public List<TestAnswer> GetAnswers(int testOccuranceId)
+        {
+            var t = _context.TestAnswer.Where(a => a.Id == testOccuranceId).ToList();
+            return t;
+        }
     }
 
 

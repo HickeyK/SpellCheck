@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201706220801472_AddDateTaken.Designer.cs">
       <DependentUpon>201706220801472_AddDateTaken.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706221156195_AddAnswers.cs" />
+    <Compile Include="Migrations\201706221156195_AddAnswers.Designer.cs">
+      <DependentUpon>201706221156195_AddAnswers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\ISpeachService.cs" />
     <Compile Include="Services\ISpellTestService.cs" />
     <Compile Include="Services\SpeachService.cs" />
@@ -103,6 +107,9 @@
     </Compile>
     <Compile Include="View\TestListView.xaml.cs">
       <DependentUpon>TestListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestOccuranceView.xaml.cs">
+      <DependentUpon>TestOccuranceView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\DataGridStyle.xaml">
       <SubType>Designer</SubType>
@@ -149,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TestOccuranceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\201706090653406_Initial.cs" />
@@ -184,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706220801472_AddDateTaken.resx">
       <DependentUpon>201706220801472_AddDateTaken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706221156195_AddAnswers.resx">
+      <DependentUpon>201706221156195_AddAnswers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

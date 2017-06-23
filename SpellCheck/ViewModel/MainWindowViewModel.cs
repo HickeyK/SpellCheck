@@ -13,6 +13,8 @@ namespace SpellCheck.ViewModel
         private ConnectedRepository _repo = new ConnectedRepository();
         private TestListViewModel _TestListViewModel;
         private AddEditTestViewModel _AddEditTestViewModel;
+        private AnswerViewModel _AnswerViewModel;
+        private TestOccuranceViewModel _TestOccuranceViewModel;
 
         #endregion
 
@@ -23,10 +25,14 @@ namespace SpellCheck.ViewModel
             BeginCommand = new RelayCommand(OnBegin, CanBegin);
             NavCommand = new RelayCommand<string>(OnNav);
             EditCommand = new RelayCommand(OnEdit, CanEdit);
+            ShowResultsCommand = new RelayCommand(OnShowResults);
             QuitCommand = new RelayCommand<Window>(OnQuit);
 
             _TestListViewModel = new TestListViewModel(_repo);
             _AddEditTestViewModel = new AddEditTestViewModel(_repo);
+            //_AnswerViewModel = new AnswerViewModel();
+            _TestOccuranceViewModel = new TestOccuranceViewModel(_repo);
+
 
             _AddEditTestViewModel.Done += NavToTestList;
             _AddEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
@@ -43,6 +49,7 @@ namespace SpellCheck.ViewModel
         public RelayCommand BeginCommand { get; set; }
         public RelayCommand<string> NavCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
+        public RelayCommand ShowResultsCommand { get; set; }
         public RelayCommand<Window> QuitCommand { get; set; }
 
 
@@ -159,6 +166,11 @@ namespace SpellCheck.ViewModel
         private void NavToTestList()
         {
             CurrentViewModel = _TestListViewModel;
+        }
+
+        private void OnShowResults()
+        {
+            CurrentViewModel = _TestOccuranceViewModel;
         }
 
 

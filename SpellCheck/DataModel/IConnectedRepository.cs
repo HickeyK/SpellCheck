@@ -9,5 +9,9 @@ namespace SpellCheck
         List<Spelling> GetSpellings(int testId);
         List<SpellTest> GetTests();
         void UpdateTest(SpellTest test);
+
+        List<TestOccurance> GetTestOccurances();
+
+        List<TestAnswer>GetAnswers(int testOccuranceId);
     }
 }

@@ -59,12 +59,22 @@ namespace ViewModel.Tests
             throw new NotImplementedException();
         }
 
+        public List<TestAnswer> GetAnswers(int testOccuranceId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Spelling> GetSpellings(int testId)
         {
 
             var spellTests = GetTests();
             var spellTest = spellTests.Where(st => st.Id == testId);
             return spellTest.FirstOrDefault().Spellings;
+        }
+
+        public List<TestOccurance> GetTestOccurances()
+        {
+            throw new NotImplementedException();
         }
 
         public List<SpellTest> GetTests()
