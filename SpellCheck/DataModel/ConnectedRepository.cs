@@ -1,6 +1,7 @@
 ﻿using SpellCheck.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace SpellCheck
 {
@@ -40,6 +41,10 @@ namespace SpellCheck
             _context.SaveChanges();
         }
 
+        public List<TestOccurance> GetTestOccurances(int testId)
+        {
+            return _context.TestOccurance.Where(o => o.SpellTestId == testId).ToList();
+        }
     }
 
 

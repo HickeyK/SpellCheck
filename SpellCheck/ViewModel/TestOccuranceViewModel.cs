@@ -23,8 +23,6 @@ namespace SpellCheck.ViewModel
 
             _repo = repo;
 
-
-            //TestOccurances = new ObservableCollection<TestOccurance>(_repo.GetTests());
         }
 
         #endregion
@@ -35,6 +33,18 @@ namespace SpellCheck.ViewModel
 
 
         #region Properties
+
+        private SpellTest _spellTest;
+
+    public SpellTest SpellTest
+        {
+            get { return _spellTest; }
+            set
+            {
+                SetProperty(ref _spellTest, value);
+                TestOccurances = new ObservableCollection<TestOccurance>(_repo.GetTestOccurances(_spellTest.Id));
+            }
+        }
 
         private ObservableCollection<TestOccurance> _testOccurances;
 
