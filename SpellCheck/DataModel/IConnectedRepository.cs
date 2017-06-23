@@ -11,5 +11,7 @@ namespace SpellCheck
         void UpdateTest(SpellTest test);
 
         List<TestOccurance> GetTestOccurances(int testId);
+
+        List<TestAnswer>GetAnswers(int testOccuranceId);
     }
 }

@@ -10,5 +10,8 @@ namespace SpellCheck
         public DbSet<SpellTest> SpellTest { get; set; }
 
         public DbSet<TestOccurance> TestOccurance { get; set; }
+
+        public DbSet<TestAnswer> TestAnswer { get; set; }
+
     }
 }
