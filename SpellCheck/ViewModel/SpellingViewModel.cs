@@ -8,6 +8,11 @@ namespace SpellCheck.ViewModel
     {
 
         private readonly Spelling _item;
+        private ushort _errorCount;
+        private bool _skipped;
+        private ushort _correctCount;
+
+        private QuestionResult Result { get; set; }
 
         public SpellingViewModel()
         {
@@ -41,24 +46,24 @@ namespace SpellCheck.ViewModel
 
         public UInt16 CorrectCount
         {
-            get { return _item.CorrectCount; }
+            get { return _correctCount; }
             set
             {
-                if (_item.CorrectCount != value)
+                if (_correctCount != value)
                 {
-                    _item.CorrectCount = value;
+                    _correctCount = value;
                     OnPropertyChanged("CorrectCount");
                 }
             }
         }
         public bool Skipped
         {
-            get { return _item.Skipped; }
+            get { return _skipped; }
             set
             {
-                if (_item.Skipped != value)
+                if (_skipped != value)
                 {
-                    _item.Skipped = value;
+                    _skipped = value;
                     OnPropertyChanged("Skipped");
                 }
             }
@@ -66,12 +71,12 @@ namespace SpellCheck.ViewModel
 
         public UInt16 ErrorCount
         {
-            get { return _item.ErrorCount; }
+            get { return _errorCount; }
             set
             {
-                if (_item.ErrorCount != value)
+                if (_errorCount != value)
                 {
-                    _item.ErrorCount = value;
+                    _errorCount = value;
                     OnPropertyChanged("ErrorCount");
                 }
             }

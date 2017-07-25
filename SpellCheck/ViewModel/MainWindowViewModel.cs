@@ -93,17 +93,19 @@ namespace SpellCheck.ViewModel
         }
 
 
+        // Begin spelling test
         protected void OnBegin()
         {
 
-            AnswerViewModel avm = new AnswerViewModel(((TestListViewModel)CurrentViewModel).Spellings,
-                new SpeachService());
+            AnswerViewModel avm = new AnswerViewModel(
+                ((TestListViewModel)CurrentViewModel).CurrentTest.Id,
+                ((TestListViewModel)CurrentViewModel).Spellings,
+                new SpeachService(),
+                _repo);
 
             avm.Done += NavToTestList;
 
             CurrentViewModel = avm;
-            //var dialog = new View.AnswerDialog(advm);
-            //dialog.ShowDialog();
             OnPropertyChanged("Spellings");
         }
 

@@ -19,10 +19,7 @@ namespace SpellCheck
 
         public List<Spelling> GetSpellings(int testId)
         {
-
             var spellTest = _context.SpellTest.Include("Spellings").Where(st => st.Id == testId);
-
-            //var t = spellTest.FirstOrDefault();
 
             return spellTest.FirstOrDefault().Spellings;
         }
@@ -50,6 +47,22 @@ namespace SpellCheck
             return t;
         }
 
+        public bool SaveTestOccurance(TestOccurance testOccurance)
+        {
+
+            _context.TestOccurance.Add(testOccurance);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public void SaveTestAnswers(List<TestAnswer> testAnswers)
+        {
+            foreach (var answer in testAnswers)
+            {
+                _context.TestAnswer.Add(answer);
+            }
+            _context.SaveChanges();
+        }
     }
 
 

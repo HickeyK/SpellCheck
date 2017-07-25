@@ -60,7 +60,17 @@ namespace ViewModel.Tests
             throw new NotImplementedException();
         }
 
+        public bool SaveTestOccurance(TestOccurance testOccurance)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TestAnswer> GetAnswers(int testOccuranceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveTestAnswers(List<TestAnswer> testAnswers)
         {
             throw new NotImplementedException();
         }
@@ -74,6 +84,11 @@ namespace ViewModel.Tests
         }
 
         public List<TestOccurance> GetTestOccurances()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TestOccurance> GetTestOccurances(int testId)
         {
             throw new NotImplementedException();
         }
@@ -106,5 +121,9 @@ namespace ViewModel.Tests
             throw new NotImplementedException();
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

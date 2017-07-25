@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using SpellCheck.Entities;
 
 namespace SpellCheck.ViewModel
 {
@@ -12,8 +13,12 @@ namespace SpellCheck.ViewModel
 
         #region Fields
 
-        private ISpellTestService _spellTestService;
-        private ISpeachService _speachService;
+        private readonly ISpellTestService _spellTestService;
+        private readonly ISpeachService _speachService;
+        private ConnectedRepository _repo;
+        private ObservableCollection<SpellingViewModel> _spellTests;
+        private readonly int _spellTestId;
+
 
         #endregion
 
@@ -21,17 +26,20 @@ namespace SpellCheck.ViewModel
 
         #endregion
 
-        public AnswerViewModel(ObservableCollection<SpellingViewModel> spellTests,
-                                     ISpeachService speachService)
+        public AnswerViewModel(int spellTestId,
+                               ObservableCollection<SpellingViewModel> spellTests,
+                               ISpeachService speachService,
+                               ConnectedRepository repo)
         {
-
+            _spellTestId = spellTestId;
             _spellTestService = new SpellTestService(spellTests, speachService);
             _speachService = speachService;
+            _repo = repo;
+            _spellTests = spellTests;
 
             CurrentSpelling = _spellTestService.NextQuestion();
 
             RequestSpelling(CurrentSpelling);
-
 
             AnswerCommand = new RelayCommand<Window>(OnAnswer, CanAnswer);
             SkipCommand = new RelayCommand<Window>(OnSkip, CanSkip);
@@ -55,6 +63,7 @@ namespace SpellCheck.ViewModel
 
 
         private SpellingViewModel _currentSpelling;
+
         public SpellingViewModel CurrentSpelling
         {
             get { return _currentSpelling; }
@@ -63,6 +72,7 @@ namespace SpellCheck.ViewModel
 
 
         private string _currentAnswer;
+
         public string CurrentAnswer
         {
             get { return _currentAnswer; }
@@ -86,6 +96,7 @@ namespace SpellCheck.ViewModel
             {
                 // All questions answered
                 _speachService.Say("Test Completed", true);
+                SaveAnswers();
                 OnQuit(window);
                 return;
 
@@ -98,6 +109,32 @@ namespace SpellCheck.ViewModel
 
             RequestSpelling(CurrentSpelling);
 
+        }
+
+        private void SaveAnswers()
+        {
+            var testOccurance = new TestOccurance
+            {
+                DateTestTaken = DateTime.Now,
+                SpellTestId = _spellTestId
+            };
+            _repo.SaveTestOccurance(testOccurance);
+
+            var testAnswers = new List<TestAnswer>();
+            foreach (var st in _spellTests)
+            {
+                testAnswers.Add(
+                    new TestAnswer
+                    {
+                        SpellTestId = _spellTestId,
+                        TestOccuranceId = testOccurance.Id,
+                        SpellingId = st.GetItem().Id,
+                        FinalAnswer = "TODO",
+                        NumberOfTries = st.CorrectCount + st.ErrorCount,
+                        AnswerStatus = "TODO"
+                    });
+            }
+            _repo.SaveTestAnswers(testAnswers);
         }
 
         private bool CanAnswer(Window window)

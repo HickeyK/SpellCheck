@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpellCheck.Entities;
 
 namespace SpellCheck
@@ -12,6 +13,10 @@ namespace SpellCheck
 
         List<TestOccurance> GetTestOccurances(int testId);
 
+        bool SaveTestOccurance(TestOccurance testOccurance);
+
         List<TestAnswer>GetAnswers(int testOccuranceId);
+
+        void SaveTestAnswers(List<TestAnswer> testAnswers);
     }
 }
