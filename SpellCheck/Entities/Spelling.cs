@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SpellCheck.Entities
+﻿namespace SpellCheck.Entities
 {
     public class Spelling 
     {
@@ -12,8 +9,8 @@ namespace SpellCheck.Entities
 
     public enum QuestionResult
     {
-        CORRECT,
-        WRONG,
-        SKIPPED
+        Correct,
+        Wrong,
+        Skipped
     };
 }

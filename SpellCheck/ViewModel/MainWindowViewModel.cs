@@ -10,11 +10,11 @@ namespace SpellCheck.ViewModel
     {
         #region Fields
 
-        private ConnectedRepository _repo = new ConnectedRepository();
-        private TestListViewModel _TestListViewModel;
-        private AddEditTestViewModel _AddEditTestViewModel;
-        private AnswerViewModel _AnswerViewModel;
-        private TestOccuranceViewModel _TestOccuranceViewModel;
+        private readonly ConnectedRepository _repo = new ConnectedRepository();
+        private readonly TestListViewModel _testListViewModel;
+        private readonly AddEditTestViewModel _addEditTestViewModel;
+        //private AnswerViewModel _AnswerViewModel;
+        private readonly TestOccuranceViewModel _testOccuranceViewModel;
 
         #endregion
 
@@ -28,16 +28,16 @@ namespace SpellCheck.ViewModel
             ShowResultsCommand = new RelayCommand(OnShowResults);
             QuitCommand = new RelayCommand<Window>(OnQuit);
 
-            _TestListViewModel = new TestListViewModel(_repo);
-            _AddEditTestViewModel = new AddEditTestViewModel(_repo);
+            _testListViewModel = new TestListViewModel(_repo);
+            _addEditTestViewModel = new AddEditTestViewModel(_repo);
             //_AnswerViewModel = new AnswerViewModel();
-            _TestOccuranceViewModel = new TestOccuranceViewModel(_repo);
+            _testOccuranceViewModel = new TestOccuranceViewModel(_repo);
 
 
-            _AddEditTestViewModel.Done += NavToTestList;
-            _AddEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
-            _TestListViewModel.PropertyChanged += TestListViewModel_PropertyChanged;
-            CurrentViewModel = _TestListViewModel;
+            _addEditTestViewModel.Done += NavToTestList;
+            _addEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
+            _testListViewModel.PropertyChanged += TestListViewModel_PropertyChanged;
+            CurrentViewModel = _testListViewModel;
         }
 
 
@@ -53,14 +53,14 @@ namespace SpellCheck.ViewModel
         public RelayCommand<Window> QuitCommand { get; set; }
 
 
-        public BindableBase _CurrentViewModel;
+        private BindableBase _currentViewModel;
 
         public BindableBase CurrentViewModel
         {
-            get { return _CurrentViewModel; }
+            get { return _currentViewModel; }
             set
             {
-                SetProperty(ref _CurrentViewModel, value);
+                SetProperty(ref _currentViewModel, value);
                 BeginCommand.RaiseCanExecuteChanged();
                 EditCommand.RaiseCanExecuteChanged();
             }
@@ -89,7 +89,7 @@ namespace SpellCheck.ViewModel
 
         private void _AddEditTestViewModel_SpellingAdded()
         {
-            _TestListViewModel.Tests.Add(_AddEditTestViewModel.CurrentTest);
+            _testListViewModel.Tests.Add(_addEditTestViewModel.CurrentTest);
         }
 
 
@@ -128,14 +128,14 @@ namespace SpellCheck.ViewModel
             switch (destination)
             {
                 case "TestList":
-                    CurrentViewModel = _TestListViewModel;
+                    CurrentViewModel = _testListViewModel;
                     break;
 
                 case "AddTest":
-                    _AddEditTestViewModel.CurrentTest = new SpellTest();
-                    _AddEditTestViewModel.Spellings = new ObservableCollection<SpellingViewModel>();
-                    _AddEditTestViewModel.EditMode = false;
-                    CurrentViewModel = _AddEditTestViewModel;
+                    _addEditTestViewModel.CurrentTest = new SpellTest();
+                    _addEditTestViewModel.Spellings = new ObservableCollection<SpellingViewModel>();
+                    _addEditTestViewModel.EditMode = false;
+                    CurrentViewModel = _addEditTestViewModel;
                     break;
 
             }
@@ -144,10 +144,10 @@ namespace SpellCheck.ViewModel
 
         protected void OnEdit()
         {
-            _AddEditTestViewModel.CurrentTest = _TestListViewModel.CurrentTest;
-            _AddEditTestViewModel.Spellings = _TestListViewModel.Spellings; ;
-            _AddEditTestViewModel.EditMode = true;
-            CurrentViewModel = _AddEditTestViewModel;
+            _addEditTestViewModel.CurrentTest = _testListViewModel.CurrentTest;
+            _addEditTestViewModel.Spellings = _testListViewModel.Spellings; 
+            _addEditTestViewModel.EditMode = true;
+            CurrentViewModel = _addEditTestViewModel;
         }
 
         protected bool CanEdit()
@@ -167,19 +167,19 @@ namespace SpellCheck.ViewModel
 
         private void NavToTestList()
         {
-            CurrentViewModel = _TestListViewModel;
+            CurrentViewModel = _testListViewModel;
         }
 
         private void OnShowResults()
         {
-            _TestOccuranceViewModel.CurrentTest = _TestListViewModel.CurrentTest;
-            CurrentViewModel = _TestOccuranceViewModel;
+            _testOccuranceViewModel.CurrentTest = _testListViewModel.CurrentTest;
+            CurrentViewModel = _testOccuranceViewModel;
         }
 
 
         protected void OnQuit(Window window)
         {
-            if (window != null) window.Close();
+            window?.Close();
         }
 
 

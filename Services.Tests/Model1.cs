@@ -1,8 +1,6 @@
 namespace Services.Tests
 {
-    using System;
     using System.Data.Entity;
-    using System.Linq;
 
     public class Model1 : DbContext
     {

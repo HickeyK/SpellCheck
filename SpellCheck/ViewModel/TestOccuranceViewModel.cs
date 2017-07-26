@@ -79,10 +79,6 @@ namespace SpellCheck.ViewModel
                 Answers = new ObservableCollection<TestAnswer>(
                     _repo.GetAnswers(CurrentTestOccurance.Id));
 
-                //_repo.GetAnswers(_currentTestOccurance.Id).Select(
-                //    s => new SpellingViewModel(s)
-                //  )
-                //);
             }
         }
 

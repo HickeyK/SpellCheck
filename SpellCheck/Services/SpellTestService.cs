@@ -1,6 +1,5 @@
 ﻿using SpellCheck.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -8,19 +7,16 @@ namespace SpellCheck.Services
 {
     public class SpellTestService : ISpellTestService
     {
-
-        Random rnd = new Random();
+        private SpellingViewModel _current;
+        private readonly ISpeachService _speachService;
+        private readonly Random _rnd = new Random();
 
         private ObservableCollection<SpellingViewModel> Questions { get; set; }
 
-        private SpellingViewModel _current;
 
-        private ISpeachService _speachService;
-
-
-        public SpellTestService(ObservableCollection<SpellingViewModel> _questions, ISpeachService speachService)
+        public SpellTestService(ObservableCollection<SpellingViewModel> questions, ISpeachService speachService)
         {
-            Questions = _questions;
+            Questions = questions;
             _speachService = speachService;
         }
 
@@ -31,21 +27,24 @@ namespace SpellCheck.Services
             {
                 return null;
             }
-            int i = rnd.Next(0, unanswered.Count());
+            int i = _rnd.Next(0, unanswered.Count());
             _current = unanswered.ElementAt(i);
             return _current;
         }
 
         public SpellingViewModel AnswerQuestion(string answer)
         {
+            _current.FinalAnswer = answer;
             if (answer.ToUpper() == _current.Word.ToUpper())
             {
                 _current.CorrectCount += 1;
+                _current.AnswerStatus  = Entities.QuestionResult.Correct;
                 _speachService.Say("Correct.", false);
             } 
             else
             {
                 _current.ErrorCount += 1;
+                _current.AnswerStatus = Entities.QuestionResult.Wrong;
                 _speachService.Say("Wrong.", false);
             }
             return NextQuestion();
@@ -54,18 +53,11 @@ namespace SpellCheck.Services
         public SpellingViewModel SkipQuestion()
         {
             _current.Skipped = true;
+            _current.AnswerStatus = Entities.QuestionResult.Skipped;
             return NextQuestion();
         }
 
 
     }
-
- 
-    public enum QuestionResult
-    {
-        CORRECT,
-        WRONG,
-        SKIPPED
-    };
 
 }

@@ -11,18 +11,18 @@ namespace SpellCheck.Services
             {
                 new Thread(() =>
                 {
-                    runSynth(textToSay);
+                    RunSynth(textToSay);
                 }).Start();
             }
             else
             {
-                runSynth(textToSay);
+                RunSynth(textToSay);
             }
         }
 
 
 
-        private void runSynth(string textToSay)
+        private void RunSynth(string textToSay)
         {
             using (SpeechSynthesizer synth = new SpeechSynthesizer())
             {

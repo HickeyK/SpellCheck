@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 using SpellCheck.Entities;
 
@@ -99,15 +98,32 @@ namespace SpellCheck.ViewModel
                 SaveAnswers();
                 OnQuit(window);
                 return;
-
-                // Appears that setting the property to null was not triggering an evaluation of CanExecuteChanged post command execution.
-                // It was being called just before command invocation but the command is already triggered at that point so what's the point.
-                //AnswerCommand.RaiseCanExecuteChanged();
-                //SkipCommand.RaiseCanExecuteChanged();
-
             }
 
             RequestSpelling(CurrentSpelling);
+
+        }
+
+
+        private bool CanAnswer(Window window)
+        {
+            return CurrentSpelling != null;
+        }
+
+        private void OnSkip(Window window)
+        {
+            var next = _spellTestService.SkipQuestion();
+            CurrentSpelling = next;
+            CurrentAnswer = "";
+
+            if (next == null)
+            {
+                // All questions answered
+                _speachService.Say("Test Completed", true);
+                SaveAnswers();
+                OnQuit(window);
+
+            }
 
         }
 
@@ -128,41 +144,15 @@ namespace SpellCheck.ViewModel
                     {
                         SpellTestId = _spellTestId,
                         TestOccuranceId = testOccurance.Id,
-                        SpellingId = st.GetItem().Id,
-                        FinalAnswer = "TODO",
+                        SpellingId = st.Id,
+                        FinalAnswer = st.FinalAnswer,
                         NumberOfTries = st.CorrectCount + st.ErrorCount,
-                        AnswerStatus = "TODO"
+                        AnswerStatus = st.AnswerStatus.ToString()
                     });
             }
             _repo.SaveTestAnswers(testAnswers);
         }
 
-        private bool CanAnswer(Window window)
-        {
-            return CurrentSpelling != null;
-        }
-
-        private void OnSkip(Window window)
-        {
-            var next = _spellTestService.SkipQuestion();
-            CurrentSpelling = next;
-            CurrentAnswer = "";
-
-            if (next == null)
-            {
-                // All questions answered
-
-                OnQuit(window);
-
-                // Appears that setting the property to null was not triggering an evaluation of CanExecuteChanged post command execution.
-                // It was being called just before command invocation but the command is already triggered at that point so what's the point.
-
-                //AnswerCommand.RaiseCanExecuteChanged();
-                //SkipCommand.RaiseCanExecuteChanged();
-
-            }
-
-        }
 
         private bool CanSkip(Window window)
         {

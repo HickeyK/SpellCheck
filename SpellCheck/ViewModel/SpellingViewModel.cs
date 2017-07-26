@@ -11,13 +11,10 @@ namespace SpellCheck.ViewModel
         private ushort _errorCount;
         private bool _skipped;
         private ushort _correctCount;
+        private string _finalAnswer;
+        private QuestionResult _answerStatus;
 
-        private QuestionResult Result { get; set; }
-
-        public SpellingViewModel()
-        {
-            _item = new Spelling();
-        }
+        //private QuestionResult Result { get; set; }
 
         public SpellingViewModel(Spelling spelling)
         {
@@ -29,18 +26,23 @@ namespace SpellCheck.ViewModel
             return _item;
         }
 
+        public int Id
+        {
+            get { return _item.Id; }
+        }
+
 
         public string Word
         {
             get { return _item.Word; }
-            set { _item.Word = value; }
+            //set { _item.Word = value; }
         }
 
 
         public string ContextSentence
         {
             get { return _item.ContextSentence; }
-            set { _item.ContextSentence = value; }
+            //set { _item.ContextSentence = value; }
         }
 
 
@@ -78,6 +80,33 @@ namespace SpellCheck.ViewModel
                 {
                     _errorCount = value;
                     OnPropertyChanged("ErrorCount");
+                }
+            }
+        }
+
+        public string FinalAnswer
+        {
+            get { return _finalAnswer; }
+            set
+            {
+                if (_finalAnswer != value)
+                {
+                    _finalAnswer = value;
+                    OnPropertyChanged("FinalAnswer");
+                }
+            }
+        }
+
+
+        public QuestionResult AnswerStatus
+        {
+            get { return _answerStatus; }
+            set
+            {
+                if (_answerStatus != value)
+                {
+                    _answerStatus = value;
+                    OnPropertyChanged("AnswerStatus");
                 }
             }
         }

@@ -41,9 +41,9 @@ namespace Services.Tests
         public void WhenIsAnsweredIncorrectlyErrorCountIncreases()
         {
             // Arrange
-            Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
-            Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
+            var mockSpeachService = new Mock<ISpeachService>();
+            var spellings = new ObservableCollection<SpellingViewModel>();
+            var s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
 
@@ -67,9 +67,9 @@ namespace Services.Tests
         public void WhenIsSkippedFlagAsSkipped()
         {
             // Arrange
-            Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
-            Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
+            var mockSpeachService = new Mock<ISpeachService>();
+            var spellings = new ObservableCollection<SpellingViewModel>();
+            var s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
 
@@ -94,9 +94,9 @@ namespace Services.Tests
         {
 
             // Arrange
-            Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
-            Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
+            var mockSpeachService = new Mock<ISpeachService>();
+            var spellings = new ObservableCollection<SpellingViewModel>();
+            var s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
 
@@ -119,9 +119,9 @@ namespace Services.Tests
         public void Next_Should_Return_Null_When_All_Skipped()
         {
 
-            Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
-            Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
+            var mockSpeachService = new Mock<ISpeachService>();
+            var spellings = new ObservableCollection<SpellingViewModel>();
+            var s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
 
@@ -143,9 +143,9 @@ namespace Services.Tests
         public void Next_Should_Return_Question_When_Answered_Incorrectly()
         {
 
-            Mock<ISpeachService> mockSpeachService = new Mock<ISpeachService>();
-            ObservableCollection<SpellingViewModel> spellings = new ObservableCollection<SpellingViewModel>();
-            Spelling s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
+            var mockSpeachService = new Mock<ISpeachService>();
+            var spellings = new ObservableCollection<SpellingViewModel>();
+            var s = new Spelling() { Word = "Dog", ContextSentence = "The dog and bone" };
             var svm = new SpellingViewModel(s);
             spellings.Add(svm);
 

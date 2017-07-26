@@ -1,14 +1,10 @@
-﻿using Moq;
-using SpellCheck;
+﻿using SpellCheck;
 using SpellCheck.Entities;
-using SpellCheck.Services;
 using SpellCheck.ViewModel;
-using System.Collections.ObjectModel;
 using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpellCheck;
 
 namespace ViewModel.Tests
 {
