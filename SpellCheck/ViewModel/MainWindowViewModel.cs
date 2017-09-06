@@ -117,18 +117,18 @@ namespace SpellCheck.ViewModel
         protected void OnBegin()
         {
 
-            AnswerViewModel avm = new AnswerViewModel(
-                ((TestListViewModel)CurrentViewModel).CurrentTest.Id,
-                ((TestListViewModel)CurrentViewModel).Spellings,
-                new SpeachService(),
-                _repo);
+            //AnswerViewModel avm = new AnswerViewModel(
+            //    ((TestListViewModel)CurrentViewModel).CurrentTest.Id,
+            //    ((TestListViewModel)CurrentViewModel).Spellings,
+            //    new SpeachService(),
+            //    _repo);
 
+            CurrentViewModel = (BindableBase) ((IApplicationState) CurrentViewModel).OnBegin(_repo);
 
-            //avm.Done += NavToTestList;
-            avm.Done += () =>
-                CurrentViewModel = _testListViewModel;
+            //CurrentViewModel.Done += () =>
+            //    CurrentViewModel = _testListViewModel;
 
-            CurrentViewModel = avm;
+            //CurrentViewModel = avm;
 
             OnPropertyChanged("Spellings");
         }

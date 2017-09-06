@@ -7,15 +7,20 @@ using System.Windows;
 
 namespace SpellCheck.ViewModel
 {
-    interface IApplicationState
+    public interface IApplicationState
     {
+        IApplicationState OnBegin(ConnectedRepository repo);
+
         Func<bool> CanBegin { get; }
 
         Func<string, bool> CanAdd { get; }
+
         Func<string, bool> CanEdit { get; }
 
         Func<bool> CanShowResults { get; }
 
         Func<Window, bool> CanQuit { get; }
+
+        
     }
 }

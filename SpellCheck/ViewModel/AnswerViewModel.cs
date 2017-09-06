@@ -190,6 +190,10 @@ namespace SpellCheck.ViewModel
 
         #endregion
 
+        public IApplicationState OnBegin(ConnectedRepository repo)
+        {
+            throw new NotImplementedException();
+        }
 
         public Func<bool> CanBegin { get; } = () => false;
         public Func<string, bool> CanAdd { get; } = (s) => false;

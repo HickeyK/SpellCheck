@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using SpellCheck.Services;
 
 namespace SpellCheck.ViewModel
 {
@@ -98,5 +99,16 @@ namespace SpellCheck.ViewModel
         public Func<bool> CanShowResults => TestSelected;
         public Func<Window, bool> CanQuit { get; } = (w) => true;
         private bool TestSelected() => _currentTest != null;
+
+        public IApplicationState OnBegin(ConnectedRepository repo)
+        {
+            AnswerViewModel avm = new AnswerViewModel(
+                    this.CurrentTest.Id,
+                    this.Spellings,
+                    new SpeachService(),
+                    repo);
+
+            return avm;
+        }
     }
 }
