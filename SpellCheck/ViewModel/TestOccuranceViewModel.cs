@@ -11,7 +11,7 @@ namespace SpellCheck.ViewModel
     {
         #region Fields
 
-        private IConnectedRepository _repo;
+        private readonly IConnectedRepository _repo;
 
         #endregion
 
@@ -23,22 +23,25 @@ namespace SpellCheck.ViewModel
             if (DesignerProperties.GetIsInDesignMode(
                  new System.Windows.DependencyObject())) return;
 
-
             _repo = repo;
 
+            BackCommand = new RelayCommand(OnBack);
         }
 
         #endregion
 
 
-        #region Events
-        #endregion
+        #region events
 
+        public event Action Done = delegate { };
+
+        #endregion
 
         #region Properties
 
-        private SpellTest _currentTest;
+        public RelayCommand BackCommand { get; }
 
+        private SpellTest _currentTest;
         public SpellTest CurrentTest
         {
             get { return _currentTest; }
@@ -46,7 +49,10 @@ namespace SpellCheck.ViewModel
             {
                 SetProperty(ref _currentTest, value);
                 TestOccurances = new ObservableCollection<TestOccurance>(_repo.GetTestOccurances(_currentTest.Id));
-                CurrentTestOccurance = TestOccurances.FirstOrDefault();
+                if (TestOccurances != null)
+                {
+                    CurrentTestOccurance = TestOccurances.FirstOrDefault();
+                }
             }
         }
 
@@ -74,12 +80,23 @@ namespace SpellCheck.ViewModel
             }
             set
             {
-                if (_currentTestOccurance != null && _currentTestOccurance.Id == value.Id) return;
+                if (value == null)
+                {
+                    
+                }
+                if (_currentTestOccurance != null && value != null && _currentTestOccurance.Id == value.Id) return;
 
                 SetProperty(ref _currentTestOccurance, value);
 
-                Answers = new ObservableCollection<TestAnswer>(
-                    _repo.GetAnswers(CurrentTestOccurance.Id));
+                if (CurrentTestOccurance == null)
+                {
+                    Answers =   new ObservableCollection<TestAnswer>();        
+                }
+                else
+                {
+                    Answers = new ObservableCollection<TestAnswer>(
+                            _repo.GetAnswers(CurrentTestOccurance.Id));
+                }
 
             }
         }
@@ -97,10 +114,6 @@ namespace SpellCheck.ViewModel
 
 
 
-
-
-
-
         #endregion
 
 
@@ -109,6 +122,7 @@ namespace SpellCheck.ViewModel
 
 
         #region EventHandlers
+            protected void OnBack() => Done();
         #endregion
 
         public IApplicationState OnBegin(ConnectedRepository repo)

@@ -11,6 +11,8 @@ namespace SpellCheck.ViewModel
     {
         IApplicationState OnBegin(ConnectedRepository repo);
 
+        event Action Done;
+
         Func<bool> CanBegin { get; }
 
         Func<string, bool> CanAdd { get; }

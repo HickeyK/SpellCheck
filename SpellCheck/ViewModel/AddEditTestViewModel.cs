@@ -27,6 +27,7 @@ namespace SpellCheck.ViewModel
 
             SaveCommand = new RelayCommand(OnSave);
             CancelCommand = new RelayCommand(OnCancel);
+            DeleteTestCommand = new RelayCommand<SpellTest>(OnDeleteEntireTest, CanDeleteEntireTest);
             DeleteCommand = new RelayCommand<SpellingViewModel>(OnDelete);
         }
 
@@ -36,16 +37,20 @@ namespace SpellCheck.ViewModel
         #region Events
 
         public event Action Done = delegate { };
+        public event Action DeleteDone = delegate { };
         public event Action SpellingAdded = delegate { };
+        public event Action SpellingDeleted = delegate { };
 
         #endregion
 
 
         #region Properties
 
-        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand SaveCommand { get; }
 
-        public RelayCommand CancelCommand { get; set; }
+        public RelayCommand CancelCommand { get; }
+
+        public RelayCommand<SpellTest> DeleteTestCommand { get; }
 
         public RelayCommand<SpellingViewModel> DeleteCommand { get; set; }
 
@@ -76,6 +81,9 @@ namespace SpellCheck.ViewModel
 
 
         #region Methods
+
+
+    
         #endregion
 
 
@@ -86,6 +94,14 @@ namespace SpellCheck.ViewModel
         {
             Spellings.Remove(spellingViewModel);
         }
+
+        protected void OnDeleteEntireTest(SpellTest spellTest)
+        {
+            _repo.DeleteTest(spellTest);
+            SpellingDeleted();
+            DeleteDone();
+        }
+
 
         protected void OnSave()
         {
@@ -107,10 +123,9 @@ namespace SpellCheck.ViewModel
             Done();
         }
 
-        protected void OnCancel()
-        {
-            Done();
-        }
+
+        protected void OnCancel() => Done();
+
 
 
         #endregion
@@ -118,6 +133,12 @@ namespace SpellCheck.ViewModel
         public IApplicationState OnBegin(ConnectedRepository repo)
         {
             throw new NotImplementedException();
+        }
+
+        private Func<SpellTest, bool> CanDeleteEntireTest
+        {
+            get {return (s) => EditMode; } 
+            
         }
 
         public Func<bool> CanBegin { get; } = () => false;

@@ -23,7 +23,7 @@
             <ComboBox x:Name="TestOccurances"
                       ItemsSource="{Binding TestOccurances}"
                       SelectedItem="{Binding CurrentTestOccurance}"
-                      Grid.Column="2"
+                      Grid.Column="1"
                       VerticalAlignment="Center">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

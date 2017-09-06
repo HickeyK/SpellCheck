@@ -3,6 +3,7 @@ using SpellCheck.Entities;
 using SpellCheck.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 
 namespace SpellCheck.ViewModel
@@ -13,7 +14,7 @@ namespace SpellCheck.ViewModel
 
         private readonly ConnectedRepository _repo = new ConnectedRepository();
 
-        private readonly TestListViewModel _testListViewModel;
+        private TestListViewModel _testListViewModel;
         private readonly AddEditTestViewModel _addEditTestViewModel;
         private readonly TestOccuranceViewModel _testOccuranceViewModel;
 
@@ -47,8 +48,24 @@ namespace SpellCheck.ViewModel
 
 
             // For screen refresh
-            _addEditTestViewModel.Done += NavToTestList;
+            _addEditTestViewModel.Done += () =>
+            {
+                CurrentViewModel = _testListViewModel;
+            };
+
+            _addEditTestViewModel.DeleteDone += () =>
+            {
+                _testListViewModel.CurrentTest = _testListViewModel.Tests.FirstOrDefault();
+                CurrentViewModel = _testListViewModel;
+            };
+
+            _testOccuranceViewModel.Done += () =>
+            {
+                CurrentViewModel = _testListViewModel;
+            }; 
+
             _addEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
+            _addEditTestViewModel.SpellingDeleted += _AddEditTestViewModel_SpellingDeleted;
             _testListViewModel.PropertyChanged += TestListViewModel_PropertyChanged;
 
             CurrentViewModel = _testListViewModel;
@@ -110,8 +127,13 @@ namespace SpellCheck.ViewModel
         private void _AddEditTestViewModel_SpellingAdded()
         {
             _testListViewModel.Tests.Add(_addEditTestViewModel.CurrentTest);
+            _testListViewModel.CurrentTest = _addEditTestViewModel.CurrentTest;
         }
 
+        private void _AddEditTestViewModel_SpellingDeleted()
+        {
+            _testListViewModel.Tests.Remove(_addEditTestViewModel.CurrentTest);
+        }
 
         // Begin spelling test
         protected void OnBegin()
@@ -125,8 +147,8 @@ namespace SpellCheck.ViewModel
 
             CurrentViewModel = (BindableBase) ((IApplicationState) CurrentViewModel).OnBegin(_repo);
 
-            //CurrentViewModel.Done += () =>
-            //    CurrentViewModel = _testListViewModel;
+            ((IApplicationState) CurrentViewModel).Done += () =>
+                CurrentViewModel = _testListViewModel;
 
             //CurrentViewModel = avm;
 
@@ -158,11 +180,8 @@ namespace SpellCheck.ViewModel
         }
 
         // Wired up in constructor
-        private void NavToTestList()
-        {
-            CurrentViewModel = _testListViewModel;
+        private void NavToTestList() => CurrentViewModel = _testListViewModel;
 
-        }
 
 
         private void OnShowResults()

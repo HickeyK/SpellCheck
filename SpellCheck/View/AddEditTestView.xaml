@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:SpellCheck.View"
              mc:Ignorable="d"
              d:DesignHeight="357"
@@ -17,6 +18,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -37,6 +39,7 @@
             <Label Content="Test Description:"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" />
+            
             <TextBox Text="{Binding CurrentTest.Description}"
                      Width="300"
                      Height="30"
@@ -44,11 +47,13 @@
                      VerticalAlignment="Center"
                      Grid.Column="1" />
 
+
             <Label Content="Date Created:"
                    Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" />
-            <DatePicker Text="{Binding CurrentTest.DateCreated}"
+            <DatePicker SelectedDate="{Binding CurrentTest.DateCreated}"
+                        
                         Width="160"
                         Height="30"
                         HorizontalAlignment="Left"
@@ -62,7 +67,8 @@
                   AutoGenerateColumns="False"
                   CanUserAddRows="True"
                   Grid.Row="1"
-                  Grid.ColumnSpan="2">
+                  Grid.ColumnSpan="3">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Spelling Word"
                                     Binding="{Binding Word}"
@@ -75,7 +81,7 @@
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Delete"
+                            <Button Content="Delete Spelling"
                                     Command="{Binding DataContext.DeleteCommand,
                                       RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}"
@@ -93,6 +99,11 @@
                 Content="Cancel"
                 Grid.Row="2"
                 Grid.Column="1" />
+        <Button Command="{Binding DeleteTestCommand}"
+                CommandParameter="{Binding CurrentTest}"
+                Content="Delete Test"
+                Grid.Row="2"
+                Grid.Column="2" />
 
 
 
@@ -101,3 +112,4 @@
 
 
 </UserControl>
+

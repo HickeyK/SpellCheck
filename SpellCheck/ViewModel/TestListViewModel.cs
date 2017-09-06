@@ -15,8 +15,8 @@ namespace SpellCheck.ViewModel
 
         private IConnectedRepository _repo;
 
-
         #endregion
+
 
         #region Construction
 
@@ -38,6 +38,12 @@ namespace SpellCheck.ViewModel
         #endregion
 
 
+
+        #region events
+
+        public event Action Done = delegate { };
+
+        #endregion
 
 
 

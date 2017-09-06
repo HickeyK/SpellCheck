@@ -62,6 +62,29 @@ namespace SpellCheck
             }
             _context.SaveChanges();
         }
+
+        public void DeleteTest(SpellTest spellTest)
+        {
+            if (spellTest.TestOccurances != null)
+            {
+                foreach (var o in spellTest.TestOccurances)
+                {
+                    var ta = _context.TestAnswer.Where(a => a.TestOccuranceId == o.Id).ToList();
+                    _context.TestAnswer.RemoveRange(ta);
+                }
+
+                _context.TestOccurance.RemoveRange(spellTest.TestOccurances);
+            }
+
+            if (spellTest.Spellings != null)
+            {
+                _context.Spelling.RemoveRange(spellTest.Spellings);
+            }
+
+            _context.SpellTest.Remove((spellTest));
+
+            _context.SaveChanges();
+        }
     }
 
 
