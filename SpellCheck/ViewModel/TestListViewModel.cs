@@ -1,11 +1,13 @@
-﻿using SpellCheck.Entities;
+﻿using System;
+using SpellCheck.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 
 namespace SpellCheck.ViewModel
 {
-    public class TestListViewModel : BindableBase
+    public class TestListViewModel : BindableBase, IApplicationState
     {
 
         #region fields
@@ -83,23 +85,18 @@ namespace SpellCheck.ViewModel
         #region EventHandling
 
 
-        //private void OnBegin()
-        //{
-        //    AnswerDialogViewModel advm = new AnswerDialogViewModel(new ObservableCollection<SpellingViewModel>(Spellings),
-        //        new SpeachService());
-        //    var dialog = new View.AnswerDialog(advm);
-        //    dialog.ShowDialog();
-        //    OnPropertyChanged("Spellings");
-
-        //}
-
-        //private bool CanBegin()
-        //{
-        //    return _currentTest != null;
-        //}
-
 
         #endregion
 
+        public Func<bool> CanBegin => TestSelected;
+        public Func<string, bool> CanAdd { get; } = (s) => true;
+
+        public Func<string, bool> CanEdit 
+        {
+            get { return (s) => TestSelected(); }
+        }
+        public Func<bool> CanShowResults => TestSelected;
+        public Func<Window, bool> CanQuit { get; } = (w) => true;
+        private bool TestSelected() => _currentTest != null;
     }
 }

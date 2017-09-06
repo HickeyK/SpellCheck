@@ -1,4 +1,5 @@
-﻿using SpellCheck.Entities;
+﻿using System;
+using SpellCheck.Entities;
 using SpellCheck.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,10 +12,11 @@ namespace SpellCheck.ViewModel
         #region Fields
 
         private readonly ConnectedRepository _repo = new ConnectedRepository();
+
         private readonly TestListViewModel _testListViewModel;
         private readonly AddEditTestViewModel _addEditTestViewModel;
-        //private AnswerViewModel _AnswerViewModel;
         private readonly TestOccuranceViewModel _testOccuranceViewModel;
+
 
         #endregion
 
@@ -22,22 +24,35 @@ namespace SpellCheck.ViewModel
 
         public MainWindowViewModel()
         {
-            BeginCommand = new RelayCommand(OnBegin, CanBegin);
-            NavCommand = new RelayCommand<string>(OnNav);
-            EditCommand = new RelayCommand(OnEdit, CanEdit);
-            ShowResultsCommand = new RelayCommand(OnShowResults);
-            QuitCommand = new RelayCommand<Window>(OnQuit);
-
             _testListViewModel = new TestListViewModel(_repo);
+
+
             _addEditTestViewModel = new AddEditTestViewModel(_repo);
-            //_AnswerViewModel = new AnswerViewModel();
             _testOccuranceViewModel = new TestOccuranceViewModel(_repo);
 
 
+            CanBegin = () => ((IApplicationState) CurrentViewModel).CanBegin();
+            CanAdd = (s) => ((IApplicationState) CurrentViewModel).CanAdd(s);
+            CanEdit = (s) => ((IApplicationState) CurrentViewModel).CanEdit(s);
+            CanShowResults = () => ((IApplicationState)CurrentViewModel).CanShowResults();
+            CanQuit = (w) => ((IApplicationState)CurrentViewModel).CanQuit(w);
+
+
+
+            BeginCommand = new RelayCommand(OnBegin, CanBegin);
+            AddCommand = new RelayCommand<string>(OnAddEdit, CanAdd);
+            EditCommand = new RelayCommand<string>(OnAddEdit, CanEdit);
+            ShowResultsCommand = new RelayCommand(OnShowResults, CanShowResults);
+            QuitCommand = new RelayCommand<Window>(OnQuit, CanQuit);
+
+
+            // For screen refresh
             _addEditTestViewModel.Done += NavToTestList;
             _addEditTestViewModel.SpellingAdded += _AddEditTestViewModel_SpellingAdded;
             _testListViewModel.PropertyChanged += TestListViewModel_PropertyChanged;
+
             CurrentViewModel = _testListViewModel;
+
         }
 
 
@@ -47,8 +62,8 @@ namespace SpellCheck.ViewModel
         #region properties
 
         public RelayCommand BeginCommand { get; set; }
-        public RelayCommand<string> NavCommand { get; set; }
-        public RelayCommand EditCommand { get; set; }
+        public RelayCommand<string> AddCommand { get; set; }
+        public RelayCommand<string> EditCommand { get; set; }
         public RelayCommand ShowResultsCommand { get; set; }
         public RelayCommand<Window> QuitCommand { get; set; }
 
@@ -62,7 +77,10 @@ namespace SpellCheck.ViewModel
             {
                 SetProperty(ref _currentViewModel, value);
                 BeginCommand.RaiseCanExecuteChanged();
+                AddCommand.RaiseCanExecuteChanged();
                 EditCommand.RaiseCanExecuteChanged();
+                ShowResultsCommand.RaiseCanExecuteChanged();
+
             }
         }
 
@@ -83,7 +101,9 @@ namespace SpellCheck.ViewModel
             if (e.PropertyName == "CurrentTest")
             {
                 BeginCommand.RaiseCanExecuteChanged();
+                AddCommand.RaiseCanExecuteChanged();
                 EditCommand.RaiseCanExecuteChanged();
+                ShowResultsCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -103,33 +123,22 @@ namespace SpellCheck.ViewModel
                 new SpeachService(),
                 _repo);
 
-            avm.Done += NavToTestList;
+
+            //avm.Done += NavToTestList;
+            avm.Done += () =>
+                CurrentViewModel = _testListViewModel;
 
             CurrentViewModel = avm;
+
             OnPropertyChanged("Spellings");
         }
 
-        protected bool CanBegin()
-        {
-
-            if (CurrentViewModel.GetType() == typeof(TestListViewModel))
-            {
-                if (((TestListViewModel)CurrentViewModel).CurrentTest != null)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
-        private void OnNav(string destination)
+        private void OnAddEdit(string destination)
         {
             switch (destination)
             {
-                case "TestList":
-                    CurrentViewModel = _testListViewModel;
-                    break;
 
                 case "AddTest":
                     _addEditTestViewModel.CurrentTest = new SpellTest();
@@ -138,37 +147,23 @@ namespace SpellCheck.ViewModel
                     CurrentViewModel = _addEditTestViewModel;
                     break;
 
+                case "EditTest":
+                    _addEditTestViewModel.CurrentTest = _testListViewModel.CurrentTest;
+                    _addEditTestViewModel.Spellings = _testListViewModel.Spellings;
+                    _addEditTestViewModel.EditMode = true;
+                    CurrentViewModel = _addEditTestViewModel;
+                    break;
+
             }
         }
 
-
-        protected void OnEdit()
-        {
-            _addEditTestViewModel.CurrentTest = _testListViewModel.CurrentTest;
-            _addEditTestViewModel.Spellings = _testListViewModel.Spellings; 
-            _addEditTestViewModel.EditMode = true;
-            CurrentViewModel = _addEditTestViewModel;
-        }
-
-        protected bool CanEdit()
-        {
-
-            if (CurrentViewModel.GetType() == typeof(TestListViewModel))
-            {
-                if (((TestListViewModel)CurrentViewModel).CurrentTest != null)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
-
+        // Wired up in constructor
         private void NavToTestList()
         {
             CurrentViewModel = _testListViewModel;
+
         }
+
 
         private void OnShowResults()
         {
@@ -184,5 +179,12 @@ namespace SpellCheck.ViewModel
 
 
         #endregion
+
+
+        public Func<bool> CanBegin { get; }
+        public Func<string, bool> CanAdd { get; }
+        public Func<string, bool> CanEdit { get; }
+        public Func<bool> CanShowResults { get; }
+        public Func<Window, bool> CanQuit { get; }
     }
 }

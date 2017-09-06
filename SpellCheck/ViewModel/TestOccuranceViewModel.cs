@@ -1,11 +1,13 @@
-﻿using SpellCheck.Entities;
+﻿using System;
+using SpellCheck.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 
 namespace SpellCheck.ViewModel
 {
-    class TestOccuranceViewModel : BindableBase
+    class TestOccuranceViewModel : BindableBase, IApplicationState
     {
         #region Fields
 
@@ -109,5 +111,10 @@ namespace SpellCheck.ViewModel
         #region EventHandlers
         #endregion
 
+        public Func<bool> CanBegin { get; } = () => false;
+        public Func<string, bool> CanAdd { get; } = (s) => false;
+        public Func<string, bool> CanEdit { get; } = (s) => false;
+        public Func<bool> CanShowResults { get; } = () => false;
+        public Func<Window, bool> CanQuit { get;  } = (w) => true;
     }
 }

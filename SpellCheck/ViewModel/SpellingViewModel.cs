@@ -16,6 +16,8 @@ namespace SpellCheck.ViewModel
 
         //private QuestionResult Result { get; set; }
 
+        public SpellingViewModel()  : this(new Spelling()) {}
+
         public SpellingViewModel(Spelling spelling)
         {
             _item = spelling;
@@ -35,14 +37,14 @@ namespace SpellCheck.ViewModel
         public string Word
         {
             get { return _item.Word; }
-            //set { _item.Word = value; }
+            set { _item.Word = value; }
         }
 
 
         public string ContextSentence
         {
             get { return _item.ContextSentence; }
-            //set { _item.ContextSentence = value; }
+            set { _item.ContextSentence = value; }
         }
 
 

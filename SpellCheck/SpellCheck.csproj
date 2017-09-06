@@ -104,6 +104,7 @@
     <Compile Include="ViewModel\AnswerDialogViewModel.cs" />
     <Compile Include="ViewModel\AnswerViewModel.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
+    <Compile Include="ViewModel\IApplicationState.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TestListViewModel.cs" />
     <Compile Include="ViewModel\TestOccuranceViewModel.cs" />
